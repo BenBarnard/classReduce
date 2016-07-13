@@ -1,4 +1,18 @@
 ##### New Young Method #########################################################
+newSY <- function(data, ...){
+  useMethod("newSY")
+}
+
+newSY.data.frame <- function(data, ...){
+  do.call(newSY.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+newSY.matrix <- function(...){
+
+}
+
 newSY <- function(data_summary_ls, targetDim){
   means_ls <- data_summary_ls$xBars
   covs_ls <- data_summary_ls$Sigma
