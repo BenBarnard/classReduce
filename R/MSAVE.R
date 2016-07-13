@@ -1,5 +1,19 @@
 ###### Sliced Average Variance Estimation #####################################
-MSAVE <- function(data_summary_ls, targetDim){
+MSAVE <- function(data, ...){
+  useMethod("MSAVE")
+}
+
+MSAVE.data.frame <- function(data, ...){
+  do.call(MSAVE.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+MSAVE.matrix <- function(...){
+
+}
+
+MSAVE.default <- function(data_summary_ls, targetDim){
   B <- data_summary_ls$S_B
   S <- data_summary_ls$S_W
   covs_ls <- data_summary_ls$S
