@@ -1,6 +1,19 @@
 ###### The Loog and Duin Method ###############################################
+MLD <- function(data, ...){
+  useMethod("MLD")
+}
 
-MLD <- function(data_summary_ls, targetDim){
+MLD.data.frame <- function(data, ...){
+  do.call(MLD.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+MLD.matrix <- function(...){
+
+}
+
+MLD.default <- function(data_summary_ls, targetDim){
   prior <- data_summary_ls$Priors
   covs_ls <- data_summary_ls$S
   S_w <- data_summary_ls$S_W
