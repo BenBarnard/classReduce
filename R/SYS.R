@@ -1,4 +1,17 @@
 ###### Young, Young, Nelson and Van Zyl (SYS) #################################
+SYS <- function(data, ...){
+  useMethod("SYS")
+}
+
+SYS.data.frame <- function(data, ...){
+  do.call(SYS.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+SYS.matrix <- function(...){
+
+}
 
 SYS <- function(data_summary_ls, targetDim){
 
