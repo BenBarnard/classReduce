@@ -1,4 +1,18 @@
 ###### Ounpraseuth, Young, and Young (SY) ######################################
+SY <- function(data, ...){
+  useMethod("SY")
+}
+
+SY.data.frame <- function(data, ...){
+  do.call(SY.matrix,
+          data %>%
+            dlply(.(Group), dataDftoMatrix))
+}
+
+SY.matrix <- function(...){
+
+}
+
 SY <- function(data_summary_ls, targetDim){
   # data_summary_ls is passed from 3Summary_Stats.R
   # targetDim is the dimesion to which we would like to reduce
