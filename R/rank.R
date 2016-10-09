@@ -1,2 +1,11 @@
-# Rank of a matrix
-rank <- function(mat) {qr(mat)$rank}
+#' Rank of Matrix
+#'
+#' @param x a matrix
+#'
+#' @return The rank of the matrix x.
+#' @export
+#'
+#' @examples rank(diag(rep(1, 5)))
+rank <- function(x){
+  qr(x)$rank
+}

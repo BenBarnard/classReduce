@@ -1,13 +1,3 @@
-source("Functions_only.R")
-source("1Parameter_Configurations.R.R")
-source("2Data_Simulation.R")
-source("3Summary_Stats.R")
-source("4TheMethodsFile.R")
-source("5DataProjection.R")
-source("6DataClassification.R")
-
-
-
 sim <- function(situation = 1,
                 targetDim,
                 methods_ls = 'ALL',
