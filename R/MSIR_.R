@@ -1,13 +1,15 @@
 ###### Sliced Inverse Regression ##############################################
-MSIR_ <- function(data, ...){
+MSIR_ <- function(x, ...){
   useMethod("MSIR")
 }
 
-MSIR_.data.frame <- function(data, ...){
-  do.call(MSIR.matrix, dlply(data, .(Group), dataDftoMatrix))
+MSIR_.data.frame <- function(x, group, ...){
+  do.call(MSIR.matrix, dlply(data, .(group), dataDftoMatrix))
 }
 
 MSIR_.matrix <- function(...){
+
+
 
 }
 
