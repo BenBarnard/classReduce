@@ -1,19 +1,17 @@
 ###### Sliced Inverse Regression ##############################################
-MSIR <- function(data, discrimFunc = MASS::qda){
+MSIR_ <- function(data, ...){
   useMethod("MSIR")
 }
 
-MSIR.data.frame <- function(data, discrimFunc = MASS::qda){
-  do.call(MSIR.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+MSIR_.data.frame <- function(data, ...){
+  do.call(MSIR.matrix, dlply(data, .(Group), dataDftoMatrix))
 }
 
-MSIR.matrix <- function(...){
+MSIR_.matrix <- function(...){
 
 }
 
-MSIR.default <- function(data_summary_ls, targetDim) {
+MSIR_.default <- function(data_summary_ls, targetDim) {
   B <- data_summary_ls$S_B
   S <- data_summary_ls$S_W
   rootGammaInv <- matInvSqrt(B + S)
