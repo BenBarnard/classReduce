@@ -3,7 +3,7 @@ MSIR_ <- function(x, ...){
   UseMethod("MSIR_")
 }
 
-MSIR_.data.frame <- function(x, group, targetDim, ..., variables, samples, value, tidy = FALSE){
+MSIR_.data.frame <- function(x, group, targetDim, ..., variables, samples, value, tidy = FALSE, svdMethod = svd){
   if(tidy == TRUE){
     tidyDataDftoMatrix(data = x,
                        group = expr_find(group),
@@ -11,12 +11,14 @@ MSIR_.data.frame <- function(x, group, targetDim, ..., variables, samples, value
                        variables = expr_find(variable),
                        samples = expr_find(samples),
                        value = expr_find(value),
-                       test = expr_find(MSIR_.matrix))
+                       test = expr_find(MSIR_.matrix),
+                       svdMethod = expr_find(svdMethod))
   }else{
     dataDftoMatrix(data = x,
                    group = expr_find(group),
                    targetDim = targetDim,
-                   test = expr_find(MSIR_.matrix))
+                   test = expr_find(MSIR_.matrix),
+                   svdMethod = expr_find(svdMethod))
   }
 }
 
