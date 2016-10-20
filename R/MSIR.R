@@ -1,21 +1,52 @@
-###### Sliced Inverse Regression ##############################################
-MSIR <- function(x, ...){
-  useMethod("MSIR")
+#'Sliced Inverse Regression
+#'
+#' @param x data
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples MSIR(mcSamples(c(0,0,0), diag(1, 3), 10, 3, matrix = FALSE, tidy = TRUE), group = population, targetDim = 1, variables = variable, samples = samples, value = value, tidy = TRUE)
+SIR <- function(x, ...){
+  UseMethod("SIR")
 }
 
-MSIR.data.frame <- function(x, group = Group, targetDim, ..., discrimFunc = MASS::qda){
-  do.call(what = MSIR.matrix,
-          args = c(dlply(.data = x,
-                         .variables = expr_find(group),
-                         .fun = dataDftoMatrix),
+#' @keywords internal
+#' @export
+#'
+#' @importFrom lazyeval expr_find
+#'
+SIR.data.frame <- function(x, group, targetDim, ...,
+                            variables, samples, value, tidy = FALSE,
+                            svdMethod = svd){
+  if(tidy == TRUE){
+    tidyDataDftoMatrixDim(data = x,
+                       group = expr_find(group),
+                       targetDim = targetDim,
+                       variables = expr_find(variable),
+                       samples = expr_find(samples),
+                       value = expr_find(value),
+                       test = expr_find(SIR.matrix),
+                       svdMethod = expr_find(svdMethod))
+  }else{
+    dataDftoMatrixDim(data = x,
+                   group = expr_find(group),
                    targetDim = targetDim,
-                   discrimFunc = discrimFunc))
+                   test = expr_find(MSIR.matrix),
+                   svdMethod = expr_find(svdMethod))
+  }
 }
 
-MSIR.matrix <- function(...){
+#' @keywords internal
+#' @export
+#'
+#' @importFrom stringr string_detect
+#'
+SIR.matrix <- function(...){
+  browser()
   ls <- list(...)
-  matrix_ls <- ls[-length(ls)]
-  targetDim <- ls$targetDim
+  matrix_ls <- ls[str_detect(names(ls), "x.")]
+  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
   B <- S_B(matrix_ls)
   S <- S_W(matrix_ls)
   rootGammaInv <- matInvSqrt(B + S)

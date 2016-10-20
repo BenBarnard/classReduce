@@ -1,5 +1,6 @@
 # Then calculate the Between Class Scatter Matrix
 S_B <- function(...){
+  browser()
   xbar_ls <- list(...)
   S_B <- Reduce(`+`,
                 lapply(1:length(xbar_ls), function(population){
