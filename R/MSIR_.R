@@ -3,12 +3,21 @@ MSIR_ <- function(x, ...){
   UseMethod("MSIR_")
 }
 
-MSIR_.data.frame <- function(x, group = Group, targetDim, ...){
-  do.call(what = MSIR_.matrix,
-          args = c(dlply(.data = x,
-                         .variables = expr_find(group),
-                         .fun = dataDftoMatrix),
-                   targetDim = targetDim))
+MSIR_.data.frame <- function(x, group, targetDim, ..., variables, samples, value, tidy = FALSE){
+  if(tidy == TRUE){
+    tidyDataDftoMatrix(data = x,
+                       group = expr_find(group),
+                       targetDim = targetDim,
+                       variables = expr_find(variable),
+                       samples = expr_find(samples),
+                       value = expr_find(value),
+                       test = expr_find(MSIR_.matrix))
+  }else{
+    dataDftoMatrix(data = x,
+                   group = expr_find(group),
+                   targetDim = targetDim,
+                   test = expr_find(MSIR_.matrix))
+  }
 }
 
 MSIR_.matrix <- function(...){
