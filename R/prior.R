@@ -1,7 +1,11 @@
-# Calculate the Within and Between Class Scatter Matrices. These are necessary
-# for the Loog and Duin, SIR, and SAVE methods.
-# First, calculate the a priori probabilities:
-prior <- function(...){lapply(1:length(N), function(population) {
-  N[[population]] / Reduce(`+`,N)
-})
+#' Priors for Groups
+#'
+#' @param x list of matrices for groups
+#'
+#' @export
+#'
+prior <- function(x){
+  n <- lapply(x, nrow)
+  total <- Reduce(`+`, n)
+  lapply(n, function(y){y / total})
 }
