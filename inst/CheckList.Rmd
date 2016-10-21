@@ -1,0 +1,16 @@
+---
+title: "Ordered Clasification"
+output: html_notebook
+---
+
+1. Dimension Reduction Projection Matrix 
+  - output original data, projection matrix
+  - add object attribute
+
+2. Classify function 
+  - take in Dimension Reduction object and put through qda
+  - make sure dim reduction class is first
+
+3. Predict function
+  - take in dim reduction / qda object
+  - output prediction and conditional error rate if available
