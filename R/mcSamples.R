@@ -20,23 +20,16 @@
 #'
 #' @examples
 #'
-mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE, tidy = FALSE){
+mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE){
   pop_list <- pop_lists(meanVec, covMat, samples, pops)
   if(matrix == TRUE){
     llply(pop_list, function(list){
       mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
     })
   }else{
-    if(tidy == FALSE){
       ldply(pop_list, function(list){
         mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)
       }, .id = "population")
-    }else{
-      melt(ldply(pop_list, function(list){
-        cbind(as.data.frame(mvrnorm(n = list$samples, mu = list$meanVec, Sigma = list$covMat)),
-              samples = 1:samples)
-      }, .id = "population"), id = c("population", "samples"))
-    }
   }
 }
 
