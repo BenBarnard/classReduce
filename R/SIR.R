@@ -6,8 +6,7 @@
 #' @return
 #' @export
 #'
-#' @examples SIR(mcSamples(c(0,0,0), diag(1, 3), 10, 3, matrix = FALSE),
-#'                group = population, targetDim = 1)
+#' @examples SIR(iris, group = Species, targetDim = 1)
 SIR <- function(x, ...){
   UseMethod("SIR")
 }
@@ -17,8 +16,7 @@ SIR <- function(x, ...){
 #'
 #' @importFrom lazyeval expr_find
 #'
-SIR.data.frame <- function(x, group, targetDim, ...,
-                           svdMethod = svd){
+SIR.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
                     targetDim = targetDim,
@@ -33,28 +31,29 @@ SIR.data.frame <- function(x, group, targetDim, ...,
 #' @importFrom stringr str_replace
 #'
 SIR.matrix <- function(...){
-  browser()
+
   ls <- list(...)
   matrix_ls <- ls[str_detect(names(ls), "x.")]
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-  B <- S_B(matrix_ls)
-  S <- S_W(matrix_ls)
+  prior <- prior(matrix_ls)
+  xbar <- xbar(matrix_ls)
+  mu <- mu(matrix_ls)
+  B <- S_B(prior, xbar)
+  S <- S_W(prior, matrix_ls)
   rootGammaInv <- matInvSqrt(B + S)
   M <- rootGammaInv %*% B %*% rootGammaInv
-  projection <- MSIR_.default(rootGammaInv = rootGammaInv,
-                              M = M,
-                              targetDim = targetDim)$projection
-  n_ls <- llply(matrix_ls, nrow)
-  names_ls <- names(matrix_ls)
-  group <- Reduce(rbind, mlply(cbind(n_ls, names_ls), function(n_ls, names_ls){
-    rep(names_ls, n_ls)
-  }))
-  reduced <- t(t(projection) %*% t(reduce(rbind, matrix_ls)))
+  projection <- t(rootGammaInv %*% do.call(ls$svdMethod, list(M))$u[,1:ls$targetDim])
+  originalData <- Reduce(rbind, matrix_ls)
+  nameVec <- Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
+                    matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))
+  reducedData <- t(projection %*% t(originalData))
 
-  object <- list(reducedData = reduced,
-                 projectionMatrix = projection)
+  object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
+                 projectionMatrix = projection,
+                 origianlData = cbind(as.data.frame(originalData), nameVec))
   class(object) <- "reduced"
+  object
 
 }
 
