@@ -54,6 +54,8 @@ SIR.matrix <- function(...){
 
   object <- list(reducedData = reduced,
                  projectionMatrix = projection)
-  class(object) <- "SIR"
+  class(object) <- "reduced"
 
 }
+
+
