@@ -1,12 +1,20 @@
-# Then calculate the Between Class Scatter Matrix
-S_B <- function(...){
-  browser()
-  xbar_ls <- list(...)
-  S_B <- Reduce(`+`,
-                lapply(1:length(xbar_ls), function(population){
-                  prior[[population]] * (xbar_ls[[population]] - mu) %*%
-                    t(xbar_ls[[population]] - mu)
-                })
+#' Title
+#'
+#' @param prior
+#' @param xbar
+#' @param mu
+#'
+#' @export
+#'
+S_B <- function(prior, xbar){
+  xbarbar <- Reduce(`+`,
+                    mapply(function(x, y){x * y},
+                           prior, xbar, SIMPLIFY = FALSE)
+                    )
+  Reduce(`+`,
+         mapply(function(x, y, z){
+           (y - z) %*% t(y - z)
+         }, prior, xbar, list(xbarbar = xbarbar), SIMPLIFY = FALSE)
   )
 }
 
