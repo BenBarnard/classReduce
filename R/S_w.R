@@ -1,9 +1,14 @@
-# And finally calculate the Within Class Scatter Matrix
-
-S_w <- function(...){
-  browser()
-  Reduce(`+`, lapply(1:length(N), function(population){
-    prior[[population]] * S_ls[[population]]
-  })
+#' Within group covarinace
+#'
+#' @param prior
+#' @param matrix_ls
+#'
+#' @export
+#'
+S_W <- function(prior, matrix_ls){
+  Reduce(`+`,
+         mapply(function(x, y){
+           x * cov(y)
+         }, prior, matrix_ls, SIMPLIFY = FALSE)
   )
 }
