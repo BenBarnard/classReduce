@@ -31,7 +31,6 @@ SIR.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
 #' @importFrom stringr str_replace
 #'
 SIR.matrix <- function(...){
-
   ls <- list(...)
   matrix_ls <- ls[str_detect(names(ls), "x.")]
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -54,7 +53,4 @@ SIR.matrix <- function(...){
                  origianlData = cbind(as.data.frame(originalData), nameVec))
   class(object) <- "reduced"
   object
-
 }
-
-
