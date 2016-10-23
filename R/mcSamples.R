@@ -49,9 +49,9 @@ mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE){
 #'
 pop_lists <- function(meanVec, covMat, samples, pops){
   params <- llply(seq(pops), function(pop, meanVec, covMat, samples){
-    list(meanVec = if(is.list(meanVec)){meanVec[pop]}else{meanVec},
-         covMat = if(is.list(covMat)){covMat[pop]}else{covMat},
-         samples = if(is.list(samples)){samples[pop]}else{samples})
+    list(meanVec = if(is.list(meanVec)){meanVec[[pop]]}else{meanVec},
+         covMat = if(is.list(covMat)){covMat[[pop]]}else{covMat},
+         samples = if(is.list(samples)){samples[[pop]]}else{samples})
   }, meanVec = meanVec, covMat = covMat, samples = samples)
   setNames(params, 1:length(params))
 }
