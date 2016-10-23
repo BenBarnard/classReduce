@@ -29,28 +29,31 @@ SIR.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
 #'
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
 #'
 SIR.matrix <- function(...){
-  ls <- list(...)
-  matrix_ls <- ls[str_detect(names(ls), "x.")]
+  ls <- lazy_dots(...)
+  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
   prior <- prior(matrix_ls)
-  xbar <- xbar(matrix_ls)
-  mu <- mu(matrix_ls)
+  xbar <- lapply(matrix_ls, colMeans)
   B <- S_B(prior, xbar)
   S <- S_W(prior, matrix_ls)
   rootGammaInv <- matInvSqrt(B + S)
   M <- rootGammaInv %*% B %*% rootGammaInv
-  projection <- t(rootGammaInv %*% do.call(ls$svdMethod, list(M))$u[,1:ls$targetDim])
+  projection <- t(rootGammaInv %*% do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+
+  nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
+                                                      matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
   originalData <- Reduce(rbind, matrix_ls)
-  nameVec <- Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
-                    matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))
+  names(nameVec) <- paste(ls$group$expr)
   reducedData <- t(projection %*% t(originalData))
 
   object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
                  projectionMatrix = projection,
-                 origianlData = cbind(as.data.frame(originalData), nameVec))
+                 group = ls$group$expr)
   class(object) <- "reduced"
   object
 }
