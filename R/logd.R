@@ -1,3 +1,11 @@
+#' Title
+#'
+#' @param matrix
+#'
+#' @return
+#' @export
+#'
+#' @examples
 logd <- function(matrix){
   matSVD <- svd(matrix)
   u <- matSVD$u
