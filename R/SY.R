@@ -1,53 +1,66 @@
-###### Ounpraseuth, Young, and Young (SY) ######################################
-SY <- function(data, ...){
-  useMethod("SY")
+#'SY
+#'
+#' @param x data
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples SY(iris, group = Species, targetDim = 1)
+SY <- function(x, ...){
+  UseMethod("SY")
 }
 
-SY.data.frame <- function(data, ...){
-  do.call(SY.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+#' @keywords internal
+#' @export
+#'
+#' @importFrom lazyeval expr_find
+#'
+SY.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+  dataDftoMatrixDim(data = x,
+                    group = expr_find(group),
+                    targetDim = targetDim,
+                    test = expr_find(SY.matrix),
+                    svdMethod = expr_find(svdMethod))
 }
 
+#' @keywords internal
+#' @export
+#'
+#' @importFrom stringr str_detect
+#' @importFrom stringr str_replace
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#'
 SY.matrix <- function(...){
+  ls <- lazy_dots(...)
+  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
+  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-}
 
-SY <- function(data_summary_ls, targetDim){
-  # data_summary_ls is passed from 3Summary_Stats.R
-  # targetDim is the dimesion to which we would like to reduce
+  xbar <- lapply(matrix_ls, colMeans)
+  covs <- lapply(matrix_ls, cov)
+  invCovs <- lapply(covs, solve)
 
-  means_ls <- data_summary_ls$xBars
-  covs_ls <- data_summary_ls$S
-  invCovs_ls <- data_summary_ls$SInv
-  # We first find the projected mean differences. This will have the form SInv_i
-  # * xbar_i - SInv_1 * xbar_1, for each population i in 2:m.
-  projectedMeanDiffs <- sapply(2:length(means_ls), function(population){
-    invCovs_ls[[population]] %*% means_ls[[population]] -
-      invCovs_ls[[1]] %*% means_ls[[1]]
-  })
+  projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
+    x %*% y - invCovs[[1]] %*% xbar[[1]]
+  }, invCovs, xbar, SIMPLIFY = FALSE)[-1])
 
-  # Now we create the m - 1 covariance differences, and store these matrices as
-  # a single p * (m * p) matrix
-  covsDiffs <- do.call(cbind, lapply(2:length(covs_ls), function(population){
-    covs_ls[[population]] - covs_ls[[1]]
-  }))
+  covsDiffs <- Reduce(cbind, lapply(covs, function(x){x - covs[[1]]})[-1])
 
-  # Now we have m vectors of dimension p * 1, and a p * (m * p) matric of the
-  # covariance differences. We then append these vectors to a concatenated
-  # matrix of all the covariance matrices. This will create a matrix M with
-  # dimension p * (m + m * p).
   M <- cbind(projectedMeanDiffs, covsDiffs)
 
-  # Finally, we take the Singular Value Decomposition of M
-  svdM <- svd(M)
-  # The diagonal matrix of the eigenvalues with small relative eigenvalues
-  # replaced with 0.
-  D_p <- svdM$d
-  D_r <- diag(c(D_p[1:targetDim],rep(0,length(D_p) - targetDim)))
-  # This creates an r-rank decomposition of M, which we then truncate to F from
-  # pxp to pxr. This gives an rxp projection matrix (F^+) to project px1
-  # observations into qx1 space.
-  F_mat <- (svdM$u)%*%D_r
-  F_mat[,1:targetDim]
+  projection <- t(do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+  originalData <- Reduce(rbind, matrix_ls)
+  nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
+                                                      matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
+
+  names(nameVec) <- paste(ls$group$expr)
+  reducedData <- t(projection %*% t(originalData))
+
+  object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
+                 projectionMatrix = projection,
+                 group = ls$group$expr)
+  class(object) <- "reduced"
+  object
 }
