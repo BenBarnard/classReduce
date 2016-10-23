@@ -15,6 +15,7 @@ dataDftoMatrixDim <- function(data, group, test, targetDim, svdMethod){
                        .fun = Tidy_,
                        group = group),
                    targetDim = targetDim,
+                   group = group,
                    svdMethod = svdMethod
           )
   )
