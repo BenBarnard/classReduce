@@ -1,5 +1,8 @@
 #' @export
 #' @keywords internal
+#' @importFrom dplyr select
+#' @importFrom stringr str_extract
+#'
 #'
 predict.reduced <- function(object, newdata){
   class(object) <- class(object)[-1]
