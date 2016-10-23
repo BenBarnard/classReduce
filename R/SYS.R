@@ -16,12 +16,13 @@ SYS <- function(x, ...){
 #'
 #' @importFrom lazyeval expr_find
 #'
-SYS.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+SYS.data.frame <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
                     targetDim = targetDim,
                     test = expr_find(SYS.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    svdMethod = expr_find(svdMethod),
+                    shrinkage = expr_find(shrinkage))
 }
 
 #' @keywords internal
@@ -40,16 +41,10 @@ SYS.matrix <- function(...){
   xbar <- lapply(matrix_ls, colMeans)
   covs <- lapply(matrix_ls, cov)
   invCovs <- lapply(covs, solve)
-  n <- lapply(matrix_ls, nrow)
-  p <- ncol(matrix_ls[[1]])
-  tu_ls <- mapply(tu, covs, n, p, SIMPLIFY = FALSE)
 
-  StildeInv_ls <- mapply(function(tu, n, p, invCovs, covs){
-    (1 - tu) *
-      (n - p - 2) *
-      invCovs + ((tu * (n * p - p - 2)) / tr(covs)) *
-      diag(1, p)
-    }, tu_ls, n, p, invCovs, covs, SIMPLIFY = FALSE)
+  StildeInv_ls <- lapply(matrix_ls, function(x){
+    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))), list(x))
+    })
 
   projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
     x %*% y - StildeInv_ls[[1]] %*% xbar[[1]]
