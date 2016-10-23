@@ -15,7 +15,6 @@ SIR(x, ...)
 Sliced Inverse Regression
 }
 \examples{
-SIR(mcSamples(c(0,0,0), diag(1, 3), 10, 3, matrix = FALSE),
-               group = population, targetDim = 1)
+SIR(iris, group = Species, targetDim = 1)
 }
 
