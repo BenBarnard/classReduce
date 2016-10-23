@@ -1,53 +1,75 @@
-###### Young, Young, Nelson and Van Zyl (SYS) #################################
-SYS <- function(data, ...){
-  useMethod("SYS")
+#'SYS
+#'
+#' @param x data
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples SYS(iris, group = Species, targetDim = 1)
+SYS <- function(x, ...){
+  UseMethod("SYS")
 }
 
-SYS.data.frame <- function(data, ...){
-  do.call(SYS.matrix,
-          data %>%
-            dlply(.(Group), dataDftoMatrix))
+#' @keywords internal
+#' @export
+#'
+#' @importFrom lazyeval expr_find
+#'
+SYS.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+  dataDftoMatrixDim(data = x,
+                    group = expr_find(group),
+                    targetDim = targetDim,
+                    test = expr_find(SYS.matrix),
+                    svdMethod = expr_find(svdMethod))
 }
 
+#' @keywords internal
+#' @export
+#'
+#' @importFrom stringr str_detect
+#' @importFrom stringr str_replace
+#' @importFrom lazyeval lazy_dots
+#' @importFrom lazyeval lazy_eval
+#'
 SYS.matrix <- function(...){
+  ls <- lazy_dots(...)
+  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
+  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
 
-}
+  xbar <- lapply(matrix_ls, colMeans)
+  covs <- lapply(matrix_ls, cov)
+  invCovs <- lapply(covs, solve)
+  n <- lapply(matrix_ls, nrow)
+  p <- ncol(matrix_ls[[1]])
+  tu_ls <- mapply(tu, covs, n, p, SIMPLIFY = FALSE)
 
-SYS <- function(data_summary_ls, targetDim){
-
-  means_ls <- data_summary_ls$xBars
-  covs_ls <- data_summary_ls$S
-  invCovs_ls <- data_summary_ls$SInv
-  N <- data_summary_ls$N
-  p <- nrow(covs_ls[[1]])
-
-  # The population covariance estimates are shrunk by the following functions:
-  tu <- function(S, n) {
-    u <- p * det(S) ^ (1 / p) / tr(S)
-    min((4 * (p ^ 2 - 1) / ((n - p - 2) * p ^ 2)), 1) * u ^ (1 / p)
-  }
-  StildeInv_ls <- lapply(1:length(covs_ls), function(population){
-    (1 - tu(covs_ls[[population]], N[[population]])) *
-      (N[[population]] - p - 2) * invCovs_ls[[population]] +
-      ((tu(covs_ls[[population]], N[[population]]) *
-          (N[[population]] * p - p - 2)) / tr(covs_ls[[population]])) *
+  StildeInv_ls <- mapply(function(tu, n, p, invCovs, covs){
+    (1 - tu) *
+      (n - p - 2) *
+      invCovs + ((tu * (n * p - p - 2)) / tr(covs)) *
       diag(1, p)
-  })
+    }, tu_ls, n, p, invCovs, covs, SIMPLIFY = FALSE)
 
-  projectedMeanDiffs <- sapply(2:length(means_ls), function(population){
-    StildeInv_ls[[population]] %*% means_ls[[population]] -
-      StildeInv_ls[[1]] %*% means_ls[[1]]
-  })
+  projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
+    x %*% y - StildeInv_ls[[1]] %*% xbar[[1]]
+  }, StildeInv_ls, xbar, SIMPLIFY = FALSE)[-1])
 
-  covsDiffs <- do.call(cbind, lapply(2:length(covs_ls), function(population){
-    covs_ls[[population]] - covs_ls[[1]]
-  }))
+  covsDiffs <- Reduce(cbind, lapply(covs, function(x){x - covs[[1]]})[-1])
 
   M <- cbind(projectedMeanDiffs, covsDiffs)
 
-  svdM <- svd(M)
-  D_p <- svdM$d
-  D_r <- diag(c(D_p[1:targetDim],rep(0,length(D_p) - targetDim)))
-  F_mat <- (svdM$u)%*%D_r
-  F_mat[,1:targetDim]
+  projection <- t(do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+
+  nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
+                                                      matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
+  originalData <- Reduce(rbind, matrix_ls)
+  names(nameVec) <- paste(ls$group$expr)
+  reducedData <- t(projection %*% t(originalData))
+
+  object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
+                 projectionMatrix = projection,
+                 group = ls$group$expr)
+  class(object) <- "reduced"
+  object
 }
