@@ -7,5 +7,5 @@
 #' @importFrom ssvd ssvd
 #'
 sparsesvd <- function(x){
-  ssvd(x, method = "theory")
+  ssvd(x, method = "theory", r = nrow(x))
 }
