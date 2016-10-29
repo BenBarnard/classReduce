@@ -18,13 +18,13 @@ predict.reduced <- function(object, newdata, ..., reduced = TRUE){
     }
   pred <- predict(object, reducednewdata)
   if(ind){
-    check <- all.equal(newdatagroup[[1]], pred$class)
+    check <- all.equal(as.factor(newdatagroup[[1]]), pred$class)
     cer <- if(is.logical(check)){
       as.numeric(check)
     }else{
       as.numeric(str_extract(check, "[0-9]+")) / length(newdatagroup[[1]])
     }
-    pred <- c(pred,cer = cer)
+    pred <- c(pred, cer = cer)
   }
   pred
 }
