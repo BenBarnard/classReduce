@@ -68,7 +68,8 @@ SAVE.matrix <- function(...){
 
   object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
                  projectionMatrix = projection,
-                 group = ls$group$expr)
+                 group = ls$group$expr,
+                 discrimFunc = expr_find(qda))
   class(object) <- "reduced"
   object
 }
