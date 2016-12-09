@@ -2,14 +2,14 @@
 % Please edit documentation in R/classify.R
 \name{classify}
 \alias{classify}
-\title{CLassification function}
+\title{Classification function}
 \usage{
 classify(x, ...)
 }
 \arguments{
-\item{x}{reduced class object}
+\item{x}{data set}
 }
 \description{
-CLassification function
+Given a dimension reduced data set a classifier is built using selected discrimination function.
 }
 
