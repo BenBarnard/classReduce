@@ -15,7 +15,6 @@ SYS <- function(x, ...){
 #' @export
 #'
 #' @importFrom lazyeval expr_find
-#' @importFrom covEst Haff_shrinkage
 #'
 SYS.data.frame <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
   dataDftoMatrixDim(data = x,
@@ -33,6 +32,7 @@ SYS.data.frame <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage,
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
+#' @importFrom covEst Haff_shrinkage
 #'
 SYS.matrix <- function(...){
   ls <- lazy_dots(...)
@@ -44,7 +44,7 @@ SYS.matrix <- function(...){
   invCovs <- lapply(covs, solve)
 
   StildeInv_ls <- lapply(matrix_ls, function(x, data){
-    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))), list(x, data))
+    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))), c(x = list(x), data = list(data)))
     }, data = matrix_ls)
 
   projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
