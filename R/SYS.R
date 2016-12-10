@@ -15,6 +15,7 @@ SYS <- function(x, ...){
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom covEst Haff_shrinkage
 #'
 SYS.data.frame <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
   dataDftoMatrixDim(data = x,
