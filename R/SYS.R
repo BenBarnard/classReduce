@@ -43,9 +43,9 @@ SYS.matrix <- function(...){
   covs <- lapply(matrix_ls, cov)
   invCovs <- lapply(covs, solve)
 
-  StildeInv_ls <- lapply(matrix_ls, function(x){
-    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))), list(x))
-    })
+  StildeInv_ls <- lapply(matrix_ls, function(x, data){
+    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))), list(x, data))
+    }, data = matrix_ls)
 
   projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
     x %*% y - StildeInv_ls[[1]] %*% xbar[[1]]
