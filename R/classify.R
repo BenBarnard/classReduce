@@ -22,10 +22,12 @@ classify.reduced <- function(x, ...){
 
   if(any(class(x) %in% paste(discrimFunc))){stop(cat("Object already Classified"))}
 
-  classification <- do.call(paste(discrimFunc), list(select(x$reducedData, -eval(x$group)),
-                                                     select(x$reducedData, eval(x$group))[[1]]))
+  group <- x$group
 
-  object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = x$group))
+  classification <- do.call(paste(discrimFunc), list(select(ungroup(x$reducedData), -eval(group)),
+                                                     select_(x$reducedData, group)[[1]]))
+
+  object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = group))
 
   discrimClass <- class(classification)
 
