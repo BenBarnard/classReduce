@@ -16,9 +16,23 @@ SYS <- function(x, ...){
 #'
 #' @importFrom lazyeval expr_find
 #'
-SYS.data.frame <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
+SYS.data.frame <- SYS.tbl_df <- SYS.tbl <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
+                    targetDim = targetDim,
+                    test = expr_find(SYS.matrix),
+                    svdMethod = expr_find(svdMethod),
+                    shrinkage = expr_find(shrinkage))
+}
+
+#' @keywords internal
+#' @export
+#'
+#' @importFrom lazyeval expr_find
+#'
+SYS.grouped_df <- function(x, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
+  dataDftoMatrixDim(data = x,
+                    group = attributes(x)$vars[[1]],
                     targetDim = targetDim,
                     test = expr_find(SYS.matrix),
                     svdMethod = expr_find(svdMethod),
@@ -32,6 +46,7 @@ SYS.data.frame <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage,
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
+#' @importFrom dplyr group_by_
 #' @importFrom covEst Haff_shrinkage
 #'
 SYS.matrix <- function(...){
@@ -44,7 +59,8 @@ SYS.matrix <- function(...){
   invCovs <- lapply(covs, solve)
 
   StildeInv_ls <- lapply(matrix_ls, function(x, data){
-    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))), c(x = list(x), data = list(data)))
+    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))),
+            c(x = list(x), data = list(data)))
     }, data = matrix_ls)
 
   projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
@@ -63,7 +79,8 @@ SYS.matrix <- function(...){
   names(nameVec) <- paste(ls$group$expr)
   reducedData <- t(projection %*% t(originalData))
 
-  object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
+  object <- list(reducedData = group_by_(cbind(as.data.frame(reducedData), nameVec),
+                                        paste(ls$group$expr)),
                  projectionMatrix = projection,
                  group = ls$group$expr,
                  discrimFunc = expr_find(qda))
