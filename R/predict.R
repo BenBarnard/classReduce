@@ -5,6 +5,7 @@
 #'
 #'
 predict.reduced <- function(object, newdata, ..., reduced = TRUE){
+
   class(object) <- class(object)[-1]
   ind <- any(names(newdata) %in% paste(object$group))
   if(ind){
