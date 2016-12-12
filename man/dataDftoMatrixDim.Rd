@@ -4,7 +4,7 @@
 \alias{dataDftoMatrixDim}
 \title{Turn no a Tidy data frame into data matrix (helper function)}
 \usage{
-dataDftoMatrixDim(data, group, test, targetDim, ..., svdMethod)
+dataDftoMatrixDim(data, group, method, .dots)
 }
 \arguments{
 \item{data}{not a tidy dataframe}
