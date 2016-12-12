@@ -27,6 +27,19 @@ SAVE.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
 #' @keywords internal
 #' @export
 #'
+#' @importFrom lazyeval expr_find
+#'
+SAVE.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
+  dataDftoMatrixDim(data = x,
+                    group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
+                    test = expr_find(SAVE.matrix),
+                    svdMethod = expr_find(svdMethod))
+}
+
+#' @keywords internal
+#' @export
+#'
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
@@ -66,7 +79,8 @@ SAVE.matrix <- function(...){
   names(nameVec) <- paste(ls$group$expr)
   reducedData <- t(projection %*% t(originalData))
 
-  object <- list(reducedData = cbind(as.data.frame(reducedData), nameVec),
+  object <- list(reducedData = group_by_(cbind(as.data.frame(reducedData), nameVec),
+                                         paste(ls$group$expr)),
                  projectionMatrix = projection,
                  group = ls$group$expr,
                  discrimFunc = expr_find(qda))
