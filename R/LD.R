@@ -16,12 +16,11 @@ LD <- function(x, ...){
 #'
 #' @importFrom lazyeval expr_find
 #'
-LD.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+LD.data.frame <- function(x, group, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(LD.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(LD.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
@@ -29,12 +28,11 @@ LD.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
 #'
 #' @importFrom lazyeval expr_find
 #'
-LD.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
+LD.grouped_df <- function(x, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    test = expr_find(LD.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(LD.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
@@ -45,7 +43,7 @@ LD.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #'
-LD.matrix <- function(...){
+LD.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -62,7 +60,8 @@ LD.matrix <- function(...){
   })
 
   mld_pie <- lapply(combns, function(x){
-    c(prior[[x[1]]] / (prior[[x[1]]] + prior[[x[2]]]), prior[[x[2]]] / (prior[[x[1]]] + prior[[x[2]]]))
+    c(prior[[x[1]]] / (prior[[x[1]]] + prior[[x[2]]]),
+      prior[[x[2]]] / (prior[[x[1]]] + prior[[x[2]]]))
   })
 
   Sij <- lapply(1:length(combns), function(x){
@@ -102,7 +101,7 @@ LD.matrix <- function(...){
 
   M <- Reduce(`+`, mld_fun)
 
-  projection <- t(do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+  projection <- t(do.call(svdMethod, list(M))$u[,1:targetDim])
 
   nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
                                                       matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
