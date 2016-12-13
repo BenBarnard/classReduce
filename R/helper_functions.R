@@ -8,16 +8,14 @@
 #'
 #' @export
 #'
-dataDftoMatrixDim <- function(data, group, test, targetDim, ..., svdMethod){
-  do.call(what = paste(test),
+dataDftoMatrixDim <- function(data, group, method, .dots){
+  do.call(what = paste(method),
           args = c(x = dlply(.data = data,
                        .variables = group,
                        .fun = Tidy_,
                        group = group),
-                   targetDim = targetDim,
                    group = group,
-                   .dots = lazy_dots(...),
-                   svdMethod = svdMethod
+                   lazy_eval(.dots)
           )
   )
 }
