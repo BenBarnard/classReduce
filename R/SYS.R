@@ -15,28 +15,26 @@ SYS <- function(x, ...){
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
 #'
-SYS.data.frame <- SYS.tbl_df <- SYS.tbl <- function(x, group, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
+SYS.data.frame <- function(x, group, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(SYS.matrix),
-                    svdMethod = expr_find(svdMethod),
-                    shrinkage = expr_find(shrinkage))
+                    method = expr_find(SYS.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
 #'
-SYS.grouped_df <- function(x, targetDim, ..., shrinkage = Haff_shrinkage, svdMethod = svd){
+SYS.grouped_df <- function(x, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    test = expr_find(SYS.matrix),
-                    svdMethod = expr_find(svdMethod),
-                    shrinkage = expr_find(shrinkage))
+                    method = expr_find(SYS.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
@@ -49,7 +47,7 @@ SYS.grouped_df <- function(x, targetDim, ..., shrinkage = Haff_shrinkage, svdMet
 #' @importFrom dplyr group_by_
 #' @importFrom covEst Haff_shrinkage
 #'
-SYS.matrix <- function(...){
+SYS.matrix <- function(..., group, targetDim, svdMethod = svd, shrinkage = Haff_shrinkage){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -59,7 +57,7 @@ SYS.matrix <- function(...){
   invCovs <- lapply(covs, solve)
 
   StildeInv_ls <- lapply(matrix_ls, function(x, data){
-    do.call(paste(lazy_eval(lazy_eval(ls$.dots.shrinkage))),
+    do.call(shrinkage,
             c(x = list(x), data = list(data)))
     }, data = matrix_ls)
 
@@ -71,18 +69,18 @@ SYS.matrix <- function(...){
 
   M <- cbind(projectedMeanDiffs, covsDiffs)
 
-  projection <- t(do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+  projection <- t(do.call(svdMethod, list(M))$u[,1:targetDim])
 
   nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
                                                       matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
   originalData <- Reduce(rbind, matrix_ls)
-  names(nameVec) <- paste(ls$group$expr)
+  names(nameVec) <- paste(expr_find(group))
   reducedData <- t(projection %*% t(originalData))
 
   object <- list(reducedData = group_by_(cbind(as.data.frame(reducedData), nameVec),
-                                        paste(ls$group$expr)),
+                                        paste(expr_find(group))),
                  projectionMatrix = projection,
-                 group = ls$group$expr,
+                 group = expr_find(group),
                  discrimFunc = expr_find(qda))
   class(object) <- "reduced"
   object
