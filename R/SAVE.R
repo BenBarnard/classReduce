@@ -15,26 +15,26 @@ SAVE <- function(x, ...){
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
 #'
-SAVE.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+SAVE.data.frame <- function(x, group, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(SAVE.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(SAVE.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
 #'
-SAVE.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
+SAVE.grouped_df <- function(x, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    test = expr_find(SAVE.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(SAVE.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
@@ -45,7 +45,7 @@ SAVE.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #'
-SAVE.matrix <- function(...){
+SAVE.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -71,7 +71,7 @@ SAVE.matrix <- function(...){
     (rootGammaInv %*% B %*% rootGammaInv) +
     (rootGammaInv %*% S_hatGamma %*% rootGammaInv)
 
-  projection <- t(rootGammaInv %*% do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+  projection <- t(rootGammaInv %*% do.call(svdMethod, list(M))$u[,1:targetDim])
 
   nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
                                                       matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
