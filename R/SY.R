@@ -15,26 +15,26 @@ SY <- function(x, ...){
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
 #'
-SY.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+SY.data.frame <- function(x, group, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(SY.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(SY.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
 #' @export
 #'
 #' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
 #'
-SY.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
+SY.grouped_df <- function(x, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    test = expr_find(SY.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(SY.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
@@ -45,7 +45,7 @@ SY.grouped_df <- function(x, targetDim, ..., svdMethod = svd){
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #'
-SY.matrix <- function(...){
+SY.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -63,7 +63,7 @@ SY.matrix <- function(...){
 
   M <- cbind(projectedMeanDiffs, covsDiffs)
 
-  projection <- t(do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+  projection <- t(do.call(svdMethod, list(M))$u[,1:targetDim])
   originalData <- Reduce(rbind, matrix_ls)
   nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
                                                       matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
