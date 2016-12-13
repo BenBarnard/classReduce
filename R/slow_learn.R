@@ -6,7 +6,7 @@
 #' @return
 #' @export
 #'
-#' @examples slow_learn(iris, group = Species, loss = 24, method = SYS)
+#' @examples slow_learn(iris, group = Species, loss = conditional_loss, lossValue = .1, method = SYS)
 slow_learn <- function(x, ...){
   UseMethod("slow_learn")
 }
@@ -43,9 +43,13 @@ slow_learn.grouped_df <- function(x, loss, lossValue, method, ...){
 
   while(energyTotal > 1 - lossValue){
     browser()
-    do.call(method, c(list(x = x,
+
+
+    reduced <- do.call(method, c(list(x = x,
                            targetDim = ncol(select(ungroup(x), -eval(attributes(x)$vars[[1]]))) - 1),
                       lazy_eval(ls)))
+
+
 
 
   }
