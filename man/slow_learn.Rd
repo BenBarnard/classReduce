@@ -13,6 +13,6 @@ slow_learn(x, ...)
 Slow Learning Algorithm
 }
 \examples{
-slow_learn(iris, group = Species, loss = 24, method = SYS)
+slow_learn(iris, group = Species, loss = conditional_loss, lossValue = .1, method = SYS)
 }
 
