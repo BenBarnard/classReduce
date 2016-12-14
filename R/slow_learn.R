@@ -39,7 +39,11 @@ slow_learn.data.frame <- function(x, group, loss, lossValue, method, ...){
 #'
 slow_learn.grouped_df <- function(x, loss, lossValue, method, ...){
   ls <- lazy_dots(...)
-  energyTotal <- 100
+Browser()
+  M <- do.call(method, c(list(x = x,
+                         targetDim = ncol(select(ungroup(x), -eval(attributes(x)$vars[[1]]))) - 1),
+                    lazy_eval(ls)))$M
+
 
   while(energyTotal > 1 - lossValue){
     browser()
