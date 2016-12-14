@@ -81,7 +81,8 @@ SYS.matrix <- function(..., group, targetDim, svdMethod = svd, shrinkage = Haff_
                                         paste(expr_find(group))),
                  projectionMatrix = projection,
                  group = expr_find(group),
-                 discrimFunc = expr_find(qda))
+                 discrimFunc = expr_find(qda),
+                 M = M)
   class(object) <- "reduced"
   object
 }
