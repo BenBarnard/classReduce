@@ -75,7 +75,8 @@ SY.matrix <- function(..., targetDim, svdMethod = svd){
                                          paste(ls$group$expr)),
                  projectionMatrix = projection,
                  group = ls$group$expr,
-                 discrimFunc = expr_find(qda))
+                 discrimFunc = expr_find(qda),
+                 M = M)
   class(object) <- "reduced"
   object
 }
