@@ -28,7 +28,7 @@ classify.reduced <- function(x, ...){
   classification <- do.call(paste(discrimFunc), list(select(ungroup(x$reducedData), -eval(group)),
                                                      select_(x$reducedData, group)[[1]]))
 
-  object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = group))
+  object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = group, test = x$test))
 
   discrimClass <- class(classification)
 
