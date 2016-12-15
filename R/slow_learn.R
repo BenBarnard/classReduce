@@ -38,8 +38,8 @@ slow_learn.data.frame <- function(x, group, loss, totallossValue, conditionallos
 #' @importFrom lazyeval lazy_eval
 #' @importFrom dplyr ungroup
 #'
-slow_learn.grouped_df <- function(x, loss, totallossValue = 0.1,
-                                  conditionallossValue = 0.01,
+slow_learn.grouped_df <- function(x, loss, totallossValue,
+                                  conditionallossValue,
                                   method = SYS, ...){
   ls <- lazy_dots(...)
 
