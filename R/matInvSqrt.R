@@ -9,6 +9,6 @@
 matInvSqrt <- function (matrix) {
   svdMat <- svd(matrix)
   U <- svdMat$u
-  rootDInv <- sqrt(solve(diag(svdMat$d)))
+  rootDInv <- sqrt(solve(diag(svdMat$d, nrow = length(svdMat$d))))
   U %*% rootDInv %*% t(U)
 }
