@@ -16,7 +16,7 @@ predict.reduced <- function(object, newdata, ..., reduced = TRUE){
     t(object$projection %*% t(newdata))
   }else{
       newdata
-    }
+  }
   pred <- predict(object, reducednewdata)
   if(ind){
     check <- all.equal(as.factor(newdatagroup[[1]]), pred$class)
