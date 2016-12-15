@@ -15,6 +15,7 @@ classify <- function(x, ...){
 #'
 #' @importFrom MASS qda
 #' @importFrom dplyr select
+#' @importFrom dplyr select_
 #'
 classify.reduced <- function(x, ...){
 
