@@ -47,6 +47,7 @@ slow_learn.grouped_df <- function(x, loss, totallossValue = 0.1,
                      c(list(x = x,
                             targetDim = ncol(x) - 1),
                        lazy_eval(ls)))
+  reducedData_ <- x
 
   values <- svd(reduced$M)$d
   energy <- cumsum(values) / sum(values)
@@ -60,6 +61,7 @@ slow_learn.grouped_df <- function(x, loss, totallossValue = 0.1,
 
   while(energyTotal_ < totallossValue){
 
+    reducedData <- reducedData_
     energyTotal <- energyTotal_
     projection <- projection_
 
@@ -67,12 +69,12 @@ slow_learn.grouped_df <- function(x, loss, totallossValue = 0.1,
 
     conditionalEnergy[iter] <- 1 - energy[tarDim]
 
-    reducedData <- reduced$reducedData[, c(1:tarDim, ncol(reduced$reducedData))]
+    reducedData_ <- reduced$reducedData[, c(1:tarDim, ncol(reduced$reducedData))]
 
     projection_ <- projection %*% reduced$projectionMatrix[, 1:tarDim]
 
-    reduced <- do.call(method, c(list(x = reducedData,
-                                      targetDim = ncol(reducedData) - 1),
+    reduced <- do.call(method, c(list(x = reducedData_,
+                                      targetDim = ncol(reducedData_) - 1),
                                  lazy_eval(ls)))
 
     values <- svd(reduced$M)$d
