@@ -65,7 +65,7 @@ slow_learn.grouped_df <- function(x, loss, totallossValue = 0.1,
     energyTotal <- energyTotal_
     projection <- projection_
 
-    if(tarDim == 0){break}
+    if(tarDim <= 0){break}
 
     conditionalEnergy[iter] <- 1 - energy[tarDim]
 
