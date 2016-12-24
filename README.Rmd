@@ -1,11 +1,13 @@
+# slidR
+
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/slidR)](https://cran.r-project.org/package=slidR)
 [![Coverage Status](https://img.shields.io/codecov/c/github/NA/NA/master.svg)](https://codecov.io/github/NA/NA?branch=master)
 [![Travis-CI Build Status](https://travis-ci.org/NA/NA.svg?branch=master)](https://travis-ci.org/NA/NA)
 [![Travis-CI Build Status](https://travis-ci.org/NA/NA.svg?branch=master)](https://travis-ci.org/NA/NA)
 
-# slidR
+## Overview
 
-The goal of slidR is to ...
+slidR is a collection of heterscedastic linear dimension reduction methods mainly used in supervised learning or classification. This package also leverages these methods in the `r slow_learn`
 
 ## Installation
 
