@@ -13,4 +13,12 @@ LazyData: TRUE
 Suggests:
     testthat,
     covr
+Depends:
+    plyr,
+    dplyr,
+    stringr,
+    lazyeval,
+    MASS,
+    covEst,
+    reshape2
 RoxygenNote: 5.0.1
