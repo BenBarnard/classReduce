@@ -1,8 +1,8 @@
 # slidR
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/slidR)](https://cran.r-project.org/package=slidR)
-[![Coverage Status](https://img.shields.io/codecov/c/github/benbarnard/slidR/master.svg)](https://codecov.io/github/benbarnard/slidR?branch=master)
-[![Travis-CI Build Status](https://travis-ci.org/benbarnard/slidR.svg?branch=master)](https://travis-ci.org/benbarnard/slidR)
+[![Coverage Status](https://img.shields.io/codecov/c/github/BenBarnard/slidR/master.svg)](https://codecov.io/github/BenBarnard/slidR?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/BenBarnard/slidR.svg?branch=master)](https://travis-ci.org/BenBarnard/slidR)
 
 ## Overview
 
