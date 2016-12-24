@@ -2,15 +2,16 @@
 #' @keywords internal
 #' @importFrom dplyr select
 #' @importFrom stringr str_extract
+#' @importFrom dplyr ungroup
 #'
 #'
 predict.reduced <- function(object, newdata, ..., reduced = TRUE){
-
+newdata <- as.data.frame(newdata)
   class(object) <- class(object)[-1]
   ind <- any(names(newdata) %in% paste(object$group))
   if(ind){
     newdatagroup <- select(newdata, eval(object$group))
-    newdata <- select(newdata, -eval(object$group))
+    newdata <- select(ungroup(newdata), -eval(object$group))
   }
   reducednewdata <- if(reduced == TRUE){
     t(object$projection %*% t(newdata))

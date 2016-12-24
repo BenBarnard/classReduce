@@ -41,4 +41,5 @@ library(modelr)
 data <- iris %>% group_by(Species) %>%
   crossv_mc(100)
 classifier <- data$train %>% map(SYS, targetDim = 1) %>% map(classify)
+predicted <- map2(classifier, data$test, predict)
 ```
