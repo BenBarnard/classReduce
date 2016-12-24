@@ -2,6 +2,8 @@
 #'
 #' @param prior
 #' @param matrix_ls
+#' 
+#' @importFrom stats cov
 #'
 #' @export
 #'

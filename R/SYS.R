@@ -60,6 +60,7 @@ SYS.resample <- function(x, ...){
 #' @importFrom lazyeval lazy_eval
 #' @importFrom dplyr group_by_
 #' @importFrom covEst Haff_shrinkage
+#' @importFrom stats cov
 #'
 SYS.matrix <- function(..., group, targetDim, svdMethod = svd, shrinkage = Haff_shrinkage){
   ls <- lazy_dots(...)

@@ -31,6 +31,7 @@ SConcat.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
+#' @importFrom stats cov
 #'
 SConcat.matrix <- function(...){
   ls <- lazy_dots(...)
