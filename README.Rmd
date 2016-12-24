@@ -38,8 +38,12 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 library(tidyverse)
 library(modelr)
+library(slidR)
+
 data <- iris %>% group_by(Species) %>%
   crossv_mc(100)
+
 classifier <- data$train %>% map(SYS, targetDim = 1) %>% map(classify)
+
 predicted <- map2(classifier, data$test, predict)
 ```
