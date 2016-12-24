@@ -43,6 +43,7 @@ LD.grouped_df <- function(x, ...){
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stats cov
+#' @importFrom utils combn
 #'
 LD.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
