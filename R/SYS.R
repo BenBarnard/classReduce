@@ -40,6 +40,20 @@ SYS.grouped_df <- function(x, ...){
 #' @keywords internal
 #' @export
 #'
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+#'
+SYS.resample <- function(x, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrixDim(data = x,
+                    group = attributes(x)$vars[[1]],
+                    method = expr_find(SYS.matrix),
+                    .dots = lazy_dots(...))
+}
+
+#' @keywords internal
+#' @export
+#'
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots

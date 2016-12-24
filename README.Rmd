@@ -36,5 +36,9 @@ If you encounter a clear bug, please file a minimal reproducible example on gith
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-## basic example code
+library(tidyverse)
+library(modelr)
+data <- iris %>% group_by(Species) %>%
+  crossv_mc(100)
+classifier <- data$train %>% map(SYS, targetDim = 1) %>% map(classify)
 ```
