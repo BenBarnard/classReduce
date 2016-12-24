@@ -3,6 +3,7 @@
 #' @importFrom dplyr select
 #' @importFrom stringr str_extract
 #' @importFrom dplyr ungroup
+#' @importFrom stats predict
 #'
 #'
 predict.reduced <- function(object, newdata, ..., reduced = TRUE){
