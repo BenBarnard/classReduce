@@ -12,18 +12,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# classReduce
+# slidR
 
-The goal of classReduce is to ...
+The goal of slidR is to ...
 
 ## Installation
 
-You can install classReduce from github with:
+You can install:
 
-```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("NA/NA")
+the latest released version from CRAN with
+
+install.packages("slidR")
+the latest development version from github with
+
+```{r}
+if (packageVersion("devtools") < 1.6) {
+  install.packages("devtools")
+}
+devtools::install_github("benbarnard/slidR")
 ```
+
+If you encounter a clear bug, please file a minimal reproducible example on github.
 
 ## Example
 
