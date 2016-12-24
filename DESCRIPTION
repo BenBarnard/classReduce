@@ -1,12 +1,14 @@
-Package: classReduce
+Package: slidR
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1
-Date: 2016-02-27
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Slow Learning for Heterscedastic Data
+Version: 0.99
+Date: 2016-12-24
+Author: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
+  person("Gabriel", "Odom", email = "gabriel_odom@baylor.edu", role = "aut, cre"),
+  person("Dean", "Young", email = "dean_young@baylor.edu", role = "aut"))
+Maintainer: Ben Barnard <ben_barnard@baylor.edu>
+Description: Heterscedsatic linear dimension reduction methods with slow learning.
+License: GPL-2
 LazyData: TRUE
 Suggests:
     testthat,
