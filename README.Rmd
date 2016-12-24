@@ -7,7 +7,7 @@
 
 ## Overview
 
-slidR is a collection of heterscedastic linear dimension reduction methods mainly used in supervised learning or classification. This package also leverages these methods in the `r slow_learn`
+slidR is a collection of heterscedastic linear dimension reduction methods mainly used in supervised learning or classification. This package also leverages these methods in the `slow_learn()`
 
 ## Installation
 
