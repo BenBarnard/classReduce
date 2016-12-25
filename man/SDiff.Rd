@@ -2,19 +2,17 @@
 % Please edit documentation in R/SDiff.R
 \name{SDiff}
 \alias{SDiff}
-\title{Sample Covariances Concatenated}
+\title{Sample Covariance Differences Concatenated}
 \usage{
 SDiff(x, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other variables}
 }
 \description{
-Sample Covariances Concatenated
+Sample Covariance Differences Concatenated
 }
-\examples{
-SDiff(iris, group = Species, targetDim = 1)
-}
+\keyword{internal}
 

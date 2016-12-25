@@ -1,12 +1,11 @@
-#'Sample Covariances Concatenated
+#'Sample Covariance Differences Concatenated
 #'
 #' @param x data
-#' @param ...
+#' @param ... other variables
 #'
-#' @return
 #' @export
+#' @keywords internal
 #'
-#' @examples SDiff(iris, group = Species, targetDim = 1)
 SDiff <- function(x, ...){
   UseMethod("SDiff")
 }
@@ -19,9 +18,8 @@ SDiff <- function(x, ...){
 SDiff.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(SDiff.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(SDiff.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
