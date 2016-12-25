@@ -2,14 +2,21 @@
 % Please edit documentation in R/Original.R
 \name{Original}
 \alias{Original}
-\title{Title}
+\title{Original Data}
 \usage{
 Original(x, group, targetDim, svdMethod)
 }
 \arguments{
-\item{svdMethod}{}
+\item{x}{data}
+
+\item{group}{grouping varible}
+
+\item{targetDim}{target dimension}
+
+\item{svdMethod}{svd function}
 }
 \description{
-Title
+Original Data
 }
+\keyword{internal}
 
