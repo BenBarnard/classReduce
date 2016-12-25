@@ -22,8 +22,8 @@ dataDftoMatrixDim <- function(data, group, method, .dots){
 
 #' not tidy helper
 #'
-#' @param data
-#' @param group
+#' @param data data
+#' @param group grouping variable
 #'
 #' @importFrom dplyr select
 #'
