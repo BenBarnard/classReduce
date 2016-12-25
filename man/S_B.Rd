@@ -2,14 +2,19 @@
 % Please edit documentation in R/S_B.R
 \name{S_B}
 \alias{S_B}
-\title{Title}
+\title{Scatter Matrix Between}
 \usage{
 S_B(prior, xbar)
 }
 \arguments{
-\item{mu}{}
+\item{prior}{prior based on sample sizes of groups}
+
+\item{xbar}{sample means}
+
+\item{mu}{overall mean}
 }
 \description{
-Title
+Scatter Matrix Between
 }
+\keyword{internal}
 

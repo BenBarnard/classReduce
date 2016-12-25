@@ -1,10 +1,11 @@
-#' Title
+#' Scatter Matrix Between
 #'
-#' @param prior
-#' @param xbar
-#' @param mu
+#' @param prior prior based on sample sizes of groups
+#' @param xbar sample means
+#' @param mu overall mean 
 #'
 #' @export
+#' @keywords internal
 #'
 S_B <- function(prior, xbar){
   xbarbar <- Reduce(`+`,
