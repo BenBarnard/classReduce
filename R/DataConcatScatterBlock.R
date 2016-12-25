@@ -1,12 +1,11 @@
 #' Data Concatenated and Scatter Matrix
 #'
 #' @param x data
-#' @param ...
+#' @param ... other options
 #'
-#' @return
+#' @keywords internal
 #' @export
 #'
-#' @examples DataConcatScatterBlock(iris, group = Species, targetDim = 1)
 DataConcatScatterBlock <- function(x, ...){
   UseMethod("DataConcatScatterBlock")
 }
@@ -19,9 +18,8 @@ DataConcatScatterBlock <- function(x, ...){
 DataConcatScatterBlock.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(DataConcatScatterBlock.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(DataConcatScatterBlock.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal
@@ -56,4 +54,28 @@ DataConcatScatterBlock.matrix <- function(...){
   class(object) <- "reduced"
   object
 }
+
+#' Helper for Data Concat Scatter Block
+#'
+#' @param x data
+#' @param rows number of rows
+#' @param columns number of columns
+#'
+#' @export
+#' @keywords internal
+#' 
+matBlocks <- function(x, rows, columns){
+  rg <- (row(x) - 1) %/% rows + 1
+  cg <- (col(x) - 1) %/% columns + 1
+  rci <- (rg - 1) * max(cg) + cg
+  tri <- rci[upper.tri(rci, diag = TRUE)]
+  N <- prod(dim(x)) / rows / columns
+  cv <- lapply(unique(tri), function(y){
+    mat <- x[rci == y]
+    dim(mat) <- c(rows, columns)
+    mat
+  })
+  cv
+}
+
 
