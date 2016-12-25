@@ -8,8 +8,19 @@ classify(x, ...)
 }
 \arguments{
 \item{x}{data set}
+
+\item{...}{currently for use of different dicriminant function than the 
+default for the method}
+}
+\value{
+discriminant function output plus the projection matrix used,
+        group variable and the method for dimension reduction
 }
 \description{
-Given a dimension reduced data set a classifier is built using selected discrimination function.
+Given a dimension reduced data set a classifier is built using a selected 
+discrimination function.
+}
+\examples{
+classify(LD(iris, group = Species, targetDim = 1))
 }
 

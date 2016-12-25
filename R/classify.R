@@ -1,11 +1,18 @@
 #' Classification function
 #'
-#' Given a dimension reduced data set a classifier is built using selected discrimination function.
+#' Given a dimension reduced data set a classifier is built using a selected 
+#' discrimination function.
 #'
 #' @param x data set
+#' @param ... currently for use of different dicriminant function than the 
+#'            default for the method
+#'            
+#' @return discriminant function output plus the projection matrix used,
+#'         group variable and the method for dimension reduction
 #'
 #' @export
-#'
+#' 
+#' @examples classify(LD(iris, group = Species, targetDim = 1))
 classify <- function(x, ...){
   UseMethod("classify")
 }
@@ -28,7 +35,7 @@ classify.reduced <- function(x, ...){
   classification <- do.call(paste(discrimFunc), list(select(ungroup(x$reducedData), -eval(group)),
                                                      select_(x$reducedData, group)[[1]]))
 
-  object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = group, test = x$test))
+  object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = group, method = x$method))
 
   discrimClass <- class(classification)
 
