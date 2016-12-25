@@ -2,14 +2,35 @@
 % Please edit documentation in R/LD.R
 \name{LD}
 \alias{LD}
+\alias{LD.data.frame}
+\alias{LD.grouped_df}
+\alias{LD.matrix}
 \title{LD}
 \usage{
 LD(x, ...)
+
+\method{LD}{data.frame}(x, group, ...)
+
+\method{LD}{grouped_df}(x, ...)
+
+\method{LD}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other options such as group variable for}
+
+\item{group}{grouping variable}
+
+\item{targetDim}{target dimension to reduce the data to}
+
+\item{svdMethod}{svd function used for dimesion reduction by default 
+svd in base is used}
+}
+\value{
+list of reduced data, projection matrix, 
+         group variable, discrimination function, 
+         m matrix and dimension reduction method used.
 }
 \description{
 LD
@@ -17,4 +38,5 @@ LD
 \examples{
 LD(iris, group = Species, targetDim = 1)
 }
+\keyword{internal}
 

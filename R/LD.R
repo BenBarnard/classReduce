@@ -1,9 +1,15 @@
 #'LD
 #'
 #' @param x data
-#' @param ...
-#'
-#' @return
+#' @param ... other options such as group variable for 
+#' @param targetDim target dimension to reduce the data to
+#' @param svdMethod svd function used for dimesion reduction by default 
+#'                  svd in base is used
+#' @param group grouping variable
+#'                  
+#' @return list of reduced data, projection matrix, 
+#'          group variable, discrimination function, 
+#'          m matrix and dimension reduction method used.
 #' @export
 #'
 #' @examples LD(iris, group = Species, targetDim = 1)
@@ -11,9 +17,10 @@ LD <- function(x, ...){
   UseMethod("LD")
 }
 
-#' @keywords internal
+#' @rdname LD
 #' @export
-#'
+#' @keywords internal
+#' 
 #' @importFrom lazyeval expr_find
 #'
 LD.data.frame <- function(x, group, ...){
@@ -23,8 +30,9 @@ LD.data.frame <- function(x, group, ...){
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
+#' @rdname LD
 #' @export
+#' @keywords internal
 #'
 #' @importFrom lazyeval expr_find
 #'
@@ -35,9 +43,10 @@ LD.grouped_df <- function(x, ...){
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
+#' @rdname LD
 #' @export
-#'
+#' @keywords internal
+#' 
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
@@ -116,7 +125,8 @@ LD.matrix <- function(..., targetDim, svdMethod = svd){
                  projectionMatrix = projection,
                  group = ls$group$expr,
                  discrimFunc = expr_find(qda),
-                 M = M)
+                 M = M,
+                 method = LD)
   class(object) <- "reduced"
   object
 }
