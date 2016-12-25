@@ -7,9 +7,10 @@
 matInvSqrt(matrix)
 }
 \arguments{
-\item{matrix}{}
+\item{matrix}{matrix}
 }
 \description{
 Matrix Square Root Inverse
 }
+\keyword{internal}
 

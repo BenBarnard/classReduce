@@ -1,11 +1,10 @@
 #' Matrix Square Root Inverse
 #'
-#' @param matrix
+#' @param matrix matrix
 #'
-#' @return
+#' @keywords internal
 #' @export
 #'
-#' @examples
 matInvSqrt <- function (matrix) {
   svdMat <- svd(matrix)
   U <- svdMat$u
