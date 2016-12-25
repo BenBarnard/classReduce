@@ -2,11 +2,10 @@
 #'
 #' @param meanVec Numeric vector of means for the variables.
 #' @param covMat Positive-definite symmetric matrix of the variables.
-#' @param samples
-#' @param pops
+#' @param samples number of samples
+#' @param pops number of populations
 #' @param ... Other variables used in mvnorm function in the mass package.
-#' @param matrix
-#' @param tidy
+#' @param matrix whether data should be in data frame or matrix
 #'
 #' @return Matrix of maxN multivariate normal samples.
 #'
@@ -15,10 +14,8 @@
 #' @importFrom MASS mvrnorm
 #' @importFrom reshape2 melt
 #'
-#'
+#' @keywords internal
 #' @export
-#'
-#' @examples
 #'
 mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE){
   pop_list <- pop_lists(meanVec, covMat, samples, pops)
@@ -35,10 +32,10 @@ mcSamples <- function(meanVec, covMat, samples, pops, ..., matrix = FALSE){
 
 #' List population parameters
 #'
-#' @param meanVec
-#' @param covMat
-#' @param samples
-#' @param pops
+#' @param meanVec vector of means
+#' @param covMat covariance matrices
+#' @param samples number of samples
+#' @param pops number of populations
 #'
 #' @importFrom plyr llply
 #' @importFrom stats setNames

@@ -11,9 +11,13 @@ mcSamples(meanVec, covMat, samples, pops, ..., matrix = FALSE)
 
 \item{covMat}{Positive-definite symmetric matrix of the variables.}
 
+\item{samples}{number of samples}
+
+\item{pops}{number of populations}
+
 \item{...}{Other variables used in mvnorm function in the mass package.}
 
-\item{tidy}{}
+\item{matrix}{whether data should be in data frame or matrix}
 }
 \value{
 Matrix of maxN multivariate normal samples.
@@ -21,7 +25,5 @@ Matrix of maxN multivariate normal samples.
 \description{
 Simulate Monte Carlo Samples from a Multivariate Normal Distribution
 }
-\examples{
-
-}
+\keyword{internal}
 
