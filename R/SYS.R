@@ -1,9 +1,14 @@
 #'SYS
 #'
 #' @param x data
-#' @param ...
+#' @param targetDim target dimension to reduce the data to
+#' @param svdMethod svd function used for dimesion reduction by default 
+#'                  svd in base is used
+#' @param ... other options such as group variable for 
 #'
-#' @return
+#' @return list of reduced data, projection matrix, 
+#'          group variable, discrimination function, 
+#'          m matrix.
 #' @export
 #'
 #' @examples SYS(iris, group = Species, targetDim = 1)
@@ -13,6 +18,7 @@ SYS <- function(x, ...){
 
 #' @keywords internal
 #' @export
+#' @rdname SYS
 #'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
@@ -26,6 +32,7 @@ SYS.data.frame <- function(x, group, ...){
 
 #' @keywords internal
 #' @export
+#' @rdname SYS
 #'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
@@ -39,6 +46,7 @@ SYS.grouped_df <- function(x, ...){
 
 #' @keywords internal
 #' @export
+#' @rdname SYS
 #'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
@@ -53,6 +61,7 @@ SYS.resample <- function(x, ...){
 
 #' @keywords internal
 #' @export
+#' @rdname SYS
 #'
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace

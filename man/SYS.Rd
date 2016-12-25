@@ -2,14 +2,37 @@
 % Please edit documentation in R/SYS.R
 \name{SYS}
 \alias{SYS}
+\alias{SYS.data.frame}
+\alias{SYS.grouped_df}
+\alias{SYS.matrix}
+\alias{SYS.resample}
 \title{SYS}
 \usage{
 SYS(x, ...)
+
+\method{SYS}{data.frame}(x, group, ...)
+
+\method{SYS}{grouped_df}(x, ...)
+
+\method{SYS}{resample}(x, ...)
+
+\method{SYS}{matrix}(..., group, targetDim, svdMethod = svd,
+  shrinkage = Haff_shrinkage)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other options such as group variable for}
+
+\item{targetDim}{target dimension to reduce the data to}
+
+\item{svdMethod}{svd function used for dimesion reduction by default 
+svd in base is used}
+}
+\value{
+list of reduced data, projection matrix, 
+         group variable, discrimination function, 
+         m matrix.
 }
 \description{
 SYS
@@ -17,4 +40,5 @@ SYS
 \examples{
 SYS(iris, group = Species, targetDim = 1)
 }
+\keyword{internal}
 
