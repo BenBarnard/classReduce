@@ -7,7 +7,13 @@
 pop_lists(meanVec, covMat, samples, pops)
 }
 \arguments{
-\item{pops}{}
+\item{meanVec}{vector of means}
+
+\item{covMat}{covariance matrices}
+
+\item{samples}{number of samples}
+
+\item{pops}{number of populations}
 }
 \description{
 List population parameters
