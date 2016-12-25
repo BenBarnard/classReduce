@@ -7,7 +7,9 @@
 Tidy_(data, group)
 }
 \arguments{
-\item{group}{}
+\item{data}{data}
+
+\item{group}{grouping variable}
 }
 \description{
 not tidy helper
