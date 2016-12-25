@@ -5,9 +5,8 @@
 #' @param x a matrix
 #'
 #' @return The trace of a square matrix x.
-#' @export
-#'
-#' @examples tr(diag(rep(1, 5)))
+#' 
+#' @keywords internal
 tr <- function(x){
   if(!(nrow(x) == ncol(x))){
     stop("Not a square matrix")
