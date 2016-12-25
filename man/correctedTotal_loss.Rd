@@ -2,11 +2,11 @@
 % Please edit documentation in R/correctedTotal_loss.R
 \name{correctedTotal_loss}
 \alias{correctedTotal_loss}
-\title{Title}
+\title{Corrected Total Loss}
 \usage{
 correctedTotal_loss()
 }
 \description{
-Title
+Corrected Total Loss
 }
 

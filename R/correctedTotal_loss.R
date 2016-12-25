@@ -1,9 +1,7 @@
-#' Title
+#' Corrected Total Loss
 #'
-#' @return
 #' @export
 #'
-#' @examples
 correctedTotal_loss <- function(){
 
 }
