@@ -1,10 +1,11 @@
 #' Within group covarinace
 #'
-#' @param prior
-#' @param matrix_ls
+#' @param prior prior based on group samples
+#' @param matrix_ls group sample covarinace matrices
 #' 
 #' @importFrom stats cov
 #'
+#' @keywords internal
 #' @export
 #'
 S_W <- function(prior, matrix_ls){

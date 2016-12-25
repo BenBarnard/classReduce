@@ -7,9 +7,12 @@
 S_W(prior, matrix_ls)
 }
 \arguments{
-\item{matrix_ls}{}
+\item{prior}{prior based on group samples}
+
+\item{matrix_ls}{group sample covarinace matrices}
 }
 \description{
 Within group covarinace
 }
+\keyword{internal}
 
