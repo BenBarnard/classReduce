@@ -2,17 +2,39 @@
 % Please edit documentation in R/slow_learn.R
 \name{slow_learn}
 \alias{slow_learn}
+\alias{slow_learn.data.frame}
+\alias{slow_learn.grouped_df}
 \title{Slow Learning Algorithm}
 \usage{
 slow_learn(x, ...)
+
+\method{slow_learn}{data.frame}(x, group, loss, totallossValue,
+  conditionallossValue, method, ...)
+
+\method{slow_learn}{grouped_df}(x, loss, totallossValue, conditionallossValue,
+  method = SYS, ...)
 }
 \arguments{
-\item{...}{}
+\item{x}{data}
+
+\item{...}{other options such as group variable for}
+
+\item{targetDim}{target dimension to reduce the data to}
+
+\item{svdMethod}{svd function used for dimesion reduction by default 
+svd in base is used}
+}
+\value{
+list of reduced data, projection matrix, 
+         group variable, discrimination function, 
+         m matrix and dimension reduction method used.
 }
 \description{
 Slow Learning Algorithm
 }
 \examples{
-slow_learn(iris, group = Species, loss = conditional_loss, totallossValue = .1, conditionallossValue = .01, method = SYS)
+slow_learn(iris, group = Species, loss = conditional_loss, 
+          totallossValue = .1, conditionallossValue = .01, method = SYS)
 }
+\keyword{internal}
 
