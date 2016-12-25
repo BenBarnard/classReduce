@@ -1,12 +1,11 @@
 #'Sample Covariances Concatenated
 #'
 #' @param x data
-#' @param ...
+#' @param ... other variables
 #'
-#' @return
 #' @export
+#' @keywords internal
 #'
-#' @examples SConcat(iris, group = Species, targetDim = 1)
 SConcat <- function(x, ...){
   UseMethod("SConcat")
 }
@@ -19,9 +18,8 @@ SConcat <- function(x, ...){
 SConcat.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(SConcat.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(SConcat.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal

@@ -9,12 +9,10 @@ SConcat(x, ...)
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other variables}
 }
 \description{
 Sample Covariances Concatenated
 }
-\examples{
-SConcat(iris, group = Species, targetDim = 1)
-}
+\keyword{internal}
 
