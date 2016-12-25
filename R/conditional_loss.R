@@ -1,9 +1,11 @@
-#' Title
+#' Conditional Loss
 #'
-#' @return
+#' @param x data
+#'
+#' @return loss value
+#' 
 #' @export
 #'
-#' @examples
 conditional_loss <- function(x){
 sum(x)
 }

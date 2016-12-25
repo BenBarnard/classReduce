@@ -2,11 +2,17 @@
 % Please edit documentation in R/conditional_loss.R
 \name{conditional_loss}
 \alias{conditional_loss}
-\title{Title}
+\title{Conditional Loss}
 \usage{
 conditional_loss(x)
 }
+\arguments{
+\item{x}{data}
+}
+\value{
+loss value
+}
 \description{
-Title
+Conditional Loss
 }
 
