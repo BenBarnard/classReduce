@@ -15,7 +15,5 @@ The trace of a square matrix x.
 \description{
 Calculates the trace of a square matrix.
 }
-\examples{
-tr(diag(rep(1, 5)))
-}
+\keyword{internal}
 
