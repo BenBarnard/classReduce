@@ -1,9 +1,15 @@
 #'SAVE
 #'
 #' @param x data
-#' @param ...
+#' @param targetDim target dimension to reduce the data to
+#' @param svdMethod svd function used for dimesion reduction by default 
+#'                  svd in base is used
+#' @param group grouping variable
+#' @param ... other options such as group variable for 
 #'
-#' @return
+#' @return list of reduced data, projection matrix, 
+#'          group variable, discrimination function, 
+#'          m matrix.
 #' @export
 #'
 #' @examples SAVE(iris, group = Species, targetDim = 1)
@@ -11,12 +17,10 @@ SAVE <- function(x, ...){
   UseMethod("SAVE")
 }
 
-#' @keywords internal
+#' @rdname SAVE
 #' @export
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
 SAVE.data.frame <- function(x, group, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
@@ -24,12 +28,10 @@ SAVE.data.frame <- function(x, group, ...){
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
+#' @rdname SAVE
 #' @export
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
 SAVE.grouped_df <- function(x, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
@@ -37,15 +39,13 @@ SAVE.grouped_df <- function(x, ...){
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
+#' @rdname SAVE
 #' @export
-#'
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stats cov
-#'
 SAVE.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])

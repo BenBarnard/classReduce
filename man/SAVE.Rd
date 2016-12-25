@@ -2,14 +2,35 @@
 % Please edit documentation in R/SAVE.R
 \name{SAVE}
 \alias{SAVE}
+\alias{SAVE.data.frame}
+\alias{SAVE.grouped_df}
+\alias{SAVE.matrix}
 \title{SAVE}
 \usage{
 SAVE(x, ...)
+
+\method{SAVE}{data.frame}(x, group, ...)
+
+\method{SAVE}{grouped_df}(x, ...)
+
+\method{SAVE}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other options such as group variable for}
+
+\item{group}{grouping variable}
+
+\item{targetDim}{target dimension to reduce the data to}
+
+\item{svdMethod}{svd function used for dimesion reduction by default 
+svd in base is used}
+}
+\value{
+list of reduced data, projection matrix, 
+         group variable, discrimination function, 
+         m matrix.
 }
 \description{
 SAVE
