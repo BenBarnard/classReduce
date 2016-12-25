@@ -13,7 +13,7 @@ LazyData: TRUE
 Suggests:
     testthat,
     covr
-Depends:
+Imports:
     plyr,
     dplyr,
     stringr,
