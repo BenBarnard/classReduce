@@ -1,12 +1,11 @@
 #' Data Concatenated and Scatter Matrix
 #'
 #' @param x data
-#' @param ...
+#' @param ... other options
 #'
-#' @return
+#' @keywords internal
 #' @export
 #'
-#' @examples DataConcatScatter(iris, group = Species, targetDim = 1)
 DataConcatScatter <- function(x, ...){
   UseMethod("DataConcatScatter")
 }
@@ -19,9 +18,8 @@ DataConcatScatter <- function(x, ...){
 DataConcatScatter.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
-                    targetDim = targetDim,
-                    test = expr_find(DataConcatScatter.matrix),
-                    svdMethod = expr_find(svdMethod))
+                    method = expr_find(DataConcatScatter.matrix),
+                    .dots = lazy_dots(...))
 }
 
 #' @keywords internal

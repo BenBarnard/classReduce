@@ -9,12 +9,10 @@ DataConcatScatter(x, ...)
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other options}
 }
 \description{
 Data Concatenated and Scatter Matrix
 }
-\examples{
-DataConcatScatter(iris, group = Species, targetDim = 1)
-}
+\keyword{internal}
 
