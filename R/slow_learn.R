@@ -1,16 +1,23 @@
 #' Slow Learning Algorithm
 #'
-#' @param x
-#' @param ...
+#' @param x data
+#' @param targetDim target dimension to reduce the data to
+#' @param svdMethod svd function used for dimesion reduction by default 
+#'                  svd in base is used
+#' @param ... other options such as group variable for 
 #'
-#' @return
+#' @return list of reduced data, projection matrix, 
+#'          group variable, discrimination function, 
+#'          m matrix and dimension reduction method used.
 #' @export
 #'
-#' @examples slow_learn(iris, group = Species, loss = conditional_loss, totallossValue = .1, conditionallossValue = .01, method = SYS)
+#' @examples slow_learn(iris, group = Species, loss = conditional_loss, 
+#'           totallossValue = .1, conditionallossValue = .01, method = SYS)
 slow_learn <- function(x, ...){
   UseMethod("slow_learn")
 }
 
+#' @rdname slow_learn
 #' @keywords internal
 #' @export
 #'
@@ -19,7 +26,8 @@ slow_learn <- function(x, ...){
 #' @importFrom dplyr select
 #' @importFrom dplyr group_by_
 #'
-slow_learn.data.frame <- function(x, group, loss, totallossValue, conditionallossValue, method, ...){
+slow_learn.data.frame <- function(x, group, loss, totallossValue, 
+                                  conditionallossValue, method, ...){
   x <- group_by_(x, expr_find(group))
   ls <- lazy_dots(...)
   do.call(slow_learn.grouped_df, c(list(x = x, loss = loss,
@@ -30,8 +38,9 @@ slow_learn.data.frame <- function(x, group, loss, totallossValue, conditionallos
 
 }
 
-#' @keywords internal
+#' @rdname slow_learn
 #' @export
+#' @keywords internal
 #'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
