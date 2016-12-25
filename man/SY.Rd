@@ -2,14 +2,33 @@
 % Please edit documentation in R/SY.R
 \name{SY}
 \alias{SY}
+\alias{SY.data.frame}
+\alias{SY.grouped_df}
+\alias{SY.matrix}
 \title{SY}
 \usage{
 SY(x, ...)
+
+\method{SY}{data.frame}(x, group, ...)
+
+\method{SY}{grouped_df}(x, ...)
+
+\method{SY}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{}
+\item{...}{other options such as group variable for}
+
+\item{targetDim}{target dimension to reduce the data to}
+
+\item{svdMethod}{svd function used for dimesion reduction by default 
+svd in base is used}
+}
+\value{
+list of reduced data, projection matrix, 
+         group variable, discrimination function, 
+         m matrix.
 }
 \description{
 SY
@@ -17,4 +36,5 @@ SY
 \examples{
 SY(iris, group = Species, targetDim = 1)
 }
+\keyword{internal}
 
