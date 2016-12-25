@@ -2,7 +2,7 @@
 % Please edit documentation in R/logd.R
 \name{logd}
 \alias{logd}
-\title{Title}
+\title{Log of the SVD values of a matrix}
 \usage{
 logd(matrix)
 }
@@ -10,6 +10,7 @@ logd(matrix)
 \item{matrix}{}
 }
 \description{
-Title
+Log of the SVD values of a matrix
 }
+\keyword{internal}
 

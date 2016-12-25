@@ -1,11 +1,9 @@
-#' Title
+#' Log of the SVD values of a matrix
 #'
 #' @param matrix
+#' 
+#' @keywords internal
 #'
-#' @return
-#' @export
-#'
-#' @examples
 logd <- function(matrix){
   matSVD <- svd(matrix)
   u <- matSVD$u
