@@ -1,4 +1,4 @@
 library(testthat)
-library(classReduce)
+library(slidR)
 
-test_check("classReduce")
+test_check("slidR")
