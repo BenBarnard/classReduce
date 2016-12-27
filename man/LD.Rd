@@ -5,20 +5,23 @@
 \alias{LD.data.frame}
 \alias{LD.grouped_df}
 \alias{LD.matrix}
+\alias{LD.resample}
 \title{LD}
 \usage{
 LD(x, ...)
 
-\method{LD}{data.frame}(x, group, ...)
+\method{LD}{data.frame}(x, group, targetDim, ...)
 
-\method{LD}{grouped_df}(x, ...)
+\method{LD}{grouped_df}(x, targetDim, ...)
+
+\method{LD}{resample}(x, targetDim, ...)
 
 \method{LD}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options such as group variable for}
+\item{...}{other options}
 
 \item{group}{grouping variable}
 
@@ -38,5 +41,4 @@ LD
 \examples{
 LD(iris, group = Species, targetDim = 1)
 }
-\keyword{internal}
 
