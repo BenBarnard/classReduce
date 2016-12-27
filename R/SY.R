@@ -1,10 +1,11 @@
 #'SY
 #'
 #' @param x data
+#' @param group grouping variable
 #' @param targetDim target dimension to reduce the data to
 #' @param svdMethod svd function used for dimesion reduction by default 
 #'                  svd in base is used
-#' @param ... other options such as group variable for 
+#' @param ... other options  
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 
@@ -16,44 +17,50 @@ SY <- function(x, ...){
   UseMethod("SY")
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SY
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
-SY.data.frame <- function(x, group, ...){
+SY.data.frame <- function(x, group, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
+                    targetDim = targetDim,
                     method = expr_find(SY.matrix),
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SY
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
-SY.grouped_df <- function(x, ...){
+SY.grouped_df <- function(x, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
                     method = expr_find(SY.matrix),
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SY
-#'
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+SY.resample <- function(x, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrixDim(data = x,
+                    group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
+                    method = expr_find(SY.matrix),
+                    .dots = lazy_dots(...))
+}
+
+#' @export
+#' @rdname SY
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom stats cov
-#'
 SY.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
