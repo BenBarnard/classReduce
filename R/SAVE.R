@@ -22,7 +22,7 @@ SAVE <- function(x, ...){
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
 SAVE.data.frame <- function(x, group, targetDim, ...){
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = expr_find(group),
                     targetDim = targetDim,
                     method = expr_find(SAVE.matrix),
@@ -34,7 +34,7 @@ SAVE.data.frame <- function(x, group, targetDim, ...){
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
 SAVE.grouped_df <- function(x, targetDim, ...){
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = attributes(x)$vars[[1]],
                     targetDim = targetDim,
                     method = expr_find(SAVE.matrix),
@@ -47,7 +47,7 @@ SAVE.grouped_df <- function(x, targetDim, ...){
 #' @importFrom lazyeval lazy_dots
 SAVE.resample <- function(x, targetDim, ...){
   x <- as.data.frame(x)
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = attributes(x)$vars[[1]],
                     targetDim = targetDim,
                     method = expr_find(SAVE.matrix),
