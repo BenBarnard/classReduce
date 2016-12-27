@@ -1,10 +1,11 @@
 #'SYS
 #'
 #' @param x data
+#' @param group grouping variable
 #' @param targetDim target dimension to reduce the data to
 #' @param svdMethod svd function used for dimesion reduction by default 
 #'                  svd in base is used
-#' @param ... other options such as group variable for 
+#' @param ... other options
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 
@@ -16,53 +17,45 @@ SYS <- function(x, ...){
   UseMethod("SYS")
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SYS
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
-SYS.data.frame <- function(x, group, ...){
+SYS.data.frame <- function(x, group, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
+                    targetDim = targetDim,
                     method = expr_find(SYS.matrix),
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SYS
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
-SYS.grouped_df <- function(x, ...){
+SYS.grouped_df <- function(x, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
                     method = expr_find(SYS.matrix),
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SYS
-#'
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-#'
-SYS.resample <- function(x, ...){
+SYS.resample <- function(x, targetDim, ...){
   x <- as.data.frame(x)
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
                     method = expr_find(SYS.matrix),
                     .dots = lazy_dots(...))
 }
 
-#' @keywords internal
 #' @export
 #' @rdname SYS
-#'
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
@@ -70,7 +63,6 @@ SYS.resample <- function(x, ...){
 #' @importFrom dplyr group_by_
 #' @importFrom covEst Haff_shrinkage
 #' @importFrom stats cov
-#'
 SYS.matrix <- function(..., group, targetDim, svdMethod = svd, shrinkage = Haff_shrinkage){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
