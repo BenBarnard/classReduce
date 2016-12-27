@@ -8,7 +8,7 @@
 #'
 #' @export
 #'
-dataDftoMatrixDim <- function(data, group, method, ..., .dots){
+dataDftoMatrix <- function(data, group, method, ..., .dots){
   do.call(what = paste(method),
           args = c(x = dlply(.data = data,
                        .variables = group,
