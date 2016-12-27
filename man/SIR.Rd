@@ -5,20 +5,25 @@
 \alias{SIR.data.frame}
 \alias{SIR.grouped_df}
 \alias{SIR.matrix}
+\alias{SIR.resample}
 \title{Sliced Inverse Regression}
 \usage{
 SIR(x, ...)
 
-\method{SIR}{data.frame}(x, group, ...)
+\method{SIR}{data.frame}(x, group, targetDim, ...)
 
-\method{SIR}{grouped_df}(x, ...)
+\method{SIR}{grouped_df}(x, targetDim, ...)
+
+\method{SIR}{resample}(x, targetDim, ...)
 
 \method{SIR}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options such as group variable for}
+\item{...}{other options}
+
+\item{group}{grouping variable}
 
 \item{targetDim}{target dimension to reduce the data to}
 
@@ -36,5 +41,4 @@ Sliced Inverse Regression
 \examples{
 SIR(iris, group = Species, targetDim = 1)
 }
-\keyword{internal}
 
