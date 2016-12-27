@@ -17,7 +17,7 @@ SYS(x, ...)
 \method{SYS}{resample}(x, targetDim, ...)
 
 \method{SYS}{matrix}(..., group, targetDim, svdMethod = svd,
-  shrinkage = Haff_shrinkage)
+  covest = Haff_shrinkage)
 }
 \arguments{
 \item{x}{data}
@@ -30,6 +30,8 @@ SYS(x, ...)
 
 \item{svdMethod}{svd function used for dimesion reduction by default 
 svd in base is used}
+
+\item{covest}{covariance estimator used forming M matrix}
 }
 \value{
 list of reduced data, projection matrix, 
