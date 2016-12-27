@@ -2,9 +2,12 @@
 % Please edit documentation in R/SConcat.R
 \name{SConcat}
 \alias{SConcat}
+\alias{SConcat.resample}
 \title{Sample Covariances Concatenated}
 \usage{
 SConcat(x, ...)
+
+\method{SConcat}{resample}(x, targetDim, ...)
 }
 \arguments{
 \item{x}{data}
