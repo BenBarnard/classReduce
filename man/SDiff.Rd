@@ -2,9 +2,12 @@
 % Please edit documentation in R/SDiff.R
 \name{SDiff}
 \alias{SDiff}
+\alias{SDiff.resample}
 \title{Sample Covariance Differences Concatenated}
 \usage{
 SDiff(x, ...)
+
+\method{SDiff}{resample}(x, targetDim, ...)
 }
 \arguments{
 \item{x}{data}
