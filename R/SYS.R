@@ -5,6 +5,7 @@
 #' @param targetDim target dimension to reduce the data to
 #' @param svdMethod svd function used for dimesion reduction by default 
 #'                  svd in base is used
+#' @param covest covariance estimator used forming M matrix
 #' @param ... other options
 #'
 #' @return list of reduced data, projection matrix, 
@@ -63,7 +64,7 @@ SYS.resample <- function(x, targetDim, ...){
 #' @importFrom dplyr group_by_
 #' @importFrom covEst Haff_shrinkage
 #' @importFrom stats cov
-SYS.matrix <- function(..., group, targetDim, svdMethod = svd, shrinkage = Haff_shrinkage){
+SYS.matrix <- function(..., group, targetDim, svdMethod = svd, covest = Haff_shrinkage){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -73,7 +74,7 @@ SYS.matrix <- function(..., group, targetDim, svdMethod = svd, shrinkage = Haff_
   invCovs <- lapply(covs, solve)
 
   StildeInv_ls <- lapply(matrix_ls, function(x, data){
-    do.call(shrinkage,
+    do.call(covest,
             c(x = list(x), data = list(data)))
     }, data = matrix_ls)
 
