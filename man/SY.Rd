@@ -5,20 +5,25 @@
 \alias{SY.data.frame}
 \alias{SY.grouped_df}
 \alias{SY.matrix}
+\alias{SY.resample}
 \title{SY}
 \usage{
 SY(x, ...)
 
-\method{SY}{data.frame}(x, group, ...)
+\method{SY}{data.frame}(x, group, targetDim, ...)
 
-\method{SY}{grouped_df}(x, ...)
+\method{SY}{grouped_df}(x, targetDim, ...)
+
+\method{SY}{resample}(x, ...)
 
 \method{SY}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options such as group variable for}
+\item{...}{other options}
+
+\item{group}{grouping variable}
 
 \item{targetDim}{target dimension to reduce the data to}
 
@@ -36,5 +41,4 @@ SY
 \examples{
 SY(iris, group = Species, targetDim = 1)
 }
-\keyword{internal}
 
