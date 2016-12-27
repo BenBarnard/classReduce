@@ -9,9 +9,9 @@
 \usage{
 SAVE(x, ...)
 
-\method{SAVE}{data.frame}(x, group, ...)
+\method{SAVE}{data.frame}(x, group, targetDim, ...)
 
-\method{SAVE}{grouped_df}(x, ...)
+\method{SAVE}{grouped_df}(x, targetDim, ...)
 
 \method{SAVE}{matrix}(..., targetDim, svdMethod = svd)
 }
