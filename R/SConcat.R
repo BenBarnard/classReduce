@@ -14,7 +14,7 @@ SConcat <- function(x, ...){
 #' @export
 #' @importFrom lazyeval expr_find
 SConcat.data.frame <- function(x, group, targetDim, ...){
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = expr_find(group),
                     targetDim = targetDim,
                     method = expr_find(SConcat.matrix),
@@ -28,7 +28,7 @@ SConcat.data.frame <- function(x, group, targetDim, ...){
 #' @importFrom lazyeval lazy_dots
 SConcat.resample <- function(x, targetDim, ...){
   x <- as.data.frame(x)
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = attributes(x)$vars[[1]],
                     targetDim = targetDim,
                     method = expr_find(SConcat.matrix),
