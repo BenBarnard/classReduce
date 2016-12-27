@@ -21,7 +21,7 @@ LD <- function(x, ...){
 #' @export
 #' @importFrom lazyeval expr_find
 LD.data.frame <- function(x, group, targetDim, ...){
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = expr_find(group),
                     targetDim = targetDim,
                     method = expr_find(LD.matrix),
@@ -32,7 +32,7 @@ LD.data.frame <- function(x, group, targetDim, ...){
 #' @export
 #' @importFrom lazyeval expr_find
 LD.grouped_df <- function(x, targetDim, ...){
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = attributes(x)$vars[[1]],
                     targetDim = targetDim,
                     method = expr_find(LD.matrix),
@@ -45,7 +45,7 @@ LD.grouped_df <- function(x, targetDim, ...){
 #' @importFrom lazyeval lazy_dots
 LD.resample <- function(x, targetDim, ...){
   x <- as.data.frame(x)
-  dataDftoMatrixDim(data = x,
+  dataDftoMatrix(data = x,
                     group = attributes(x)$vars[[1]],
                     targetDim = targetDim,
                     method = expr_find(LD.matrix),
