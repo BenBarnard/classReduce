@@ -14,7 +14,7 @@ SY(x, ...)
 
 \method{SY}{grouped_df}(x, targetDim, ...)
 
-\method{SY}{resample}(x, ...)
+\method{SY}{resample}(x, targetDim, ...)
 
 \method{SY}{matrix}(..., targetDim, svdMethod = svd)
 }
