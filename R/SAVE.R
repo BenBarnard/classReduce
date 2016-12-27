@@ -5,7 +5,6 @@
 #' @param targetDim target dimension to reduce the data to
 #' @param svdMethod svd function used for dimesion reduction by default 
 #'                  svd in base is used
-#' @param group grouping variable
 #' @param ... other options
 #'
 #' @return list of reduced data, projection matrix, 
@@ -46,7 +45,7 @@ SAVE.grouped_df <- function(x, targetDim, ...){
 #' @rdname SAVE
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-SAVE.resample <- function(x, ...){
+SAVE.resample <- function(x, targetDim, ...){
   x <- as.data.frame(x)
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
