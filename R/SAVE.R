@@ -1,11 +1,12 @@
 #'SAVE
 #'
 #' @param x data
+#' @param group grouping variable
 #' @param targetDim target dimension to reduce the data to
 #' @param svdMethod svd function used for dimesion reduction by default 
 #'                  svd in base is used
 #' @param group grouping variable
-#' @param ... other options such as group variable for 
+#' @param ... other options
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 
@@ -21,9 +22,10 @@ SAVE <- function(x, ...){
 #' @export
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-SAVE.data.frame <- function(x, group, ...){
+SAVE.data.frame <- function(x, group, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
+                    targetDim = targetDim,
                     method = expr_find(SAVE.matrix),
                     .dots = lazy_dots(...))
 }
@@ -32,9 +34,23 @@ SAVE.data.frame <- function(x, group, ...){
 #' @export
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-SAVE.grouped_df <- function(x, ...){
+SAVE.grouped_df <- function(x, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
+                    method = expr_find(SAVE.matrix),
+                    .dots = lazy_dots(...))
+}
+
+#' @export
+#' @rdname SAVE
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+SAVE.resample <- function(x, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrixDim(data = x,
+                    group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
                     method = expr_find(SAVE.matrix),
                     .dots = lazy_dots(...))
 }
