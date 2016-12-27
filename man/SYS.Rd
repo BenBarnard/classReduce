@@ -10,11 +10,11 @@
 \usage{
 SYS(x, ...)
 
-\method{SYS}{data.frame}(x, group, ...)
+\method{SYS}{data.frame}(x, group, targetDim, ...)
 
-\method{SYS}{grouped_df}(x, ...)
+\method{SYS}{grouped_df}(x, targetDim, ...)
 
-\method{SYS}{resample}(x, ...)
+\method{SYS}{resample}(x, targetDim, ...)
 
 \method{SYS}{matrix}(..., group, targetDim, svdMethod = svd,
   shrinkage = Haff_shrinkage)
@@ -22,7 +22,9 @@ SYS(x, ...)
 \arguments{
 \item{x}{data}
 
-\item{...}{other options such as group variable for}
+\item{...}{other options}
+
+\item{group}{grouping variable}
 
 \item{targetDim}{target dimension to reduce the data to}
 
@@ -40,5 +42,4 @@ SYS
 \examples{
 SYS(iris, group = Species, targetDim = 1)
 }
-\keyword{internal}
 
