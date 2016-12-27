@@ -2,9 +2,12 @@
 % Please edit documentation in R/DataConcatScatterBlock.R
 \name{DataConcatScatterBlock}
 \alias{DataConcatScatterBlock}
+\alias{SAVE.resample}
 \title{Data Concatenated and Scatter Matrix}
 \usage{
 DataConcatScatterBlock(x, ...)
+
+\method{SAVE}{resample}(x, ...)
 }
 \arguments{
 \item{x}{data}
