@@ -5,6 +5,7 @@
 \alias{SAVE.data.frame}
 \alias{SAVE.grouped_df}
 \alias{SAVE.matrix}
+\alias{SAVE.resample}
 \title{SAVE}
 \usage{
 SAVE(x, ...)
@@ -13,12 +14,14 @@ SAVE(x, ...)
 
 \method{SAVE}{grouped_df}(x, targetDim, ...)
 
+\method{SAVE}{resample}(x, ...)
+
 \method{SAVE}{matrix}(..., targetDim, svdMethod = svd)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options such as group variable for}
+\item{...}{other options}
 
 \item{group}{grouping variable}
 
@@ -26,6 +29,8 @@ SAVE(x, ...)
 
 \item{svdMethod}{svd function used for dimesion reduction by default 
 svd in base is used}
+
+\item{group}{grouping variable}
 }
 \value{
 list of reduced data, projection matrix, 
