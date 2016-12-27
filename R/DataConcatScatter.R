@@ -12,12 +12,25 @@ DataConcatScatter <- function(x, ...){
 
 #' @keywords internal
 #' @export
-#'
 #' @importFrom lazyeval expr_find
-#'
-DataConcatScatter.data.frame <- function(x, group, targetDim, ..., svdMethod = svd){
+DataConcatScatter.data.frame <- function(x, group, targetDim, ...){
   dataDftoMatrixDim(data = x,
                     group = expr_find(group),
+                    targetDim = targetDim,
+                    method = expr_find(DataConcatScatter.matrix),
+                    .dots = lazy_dots(...))
+}
+
+#' @keywords internal
+#' @export
+#' @rdname DataConcatScatter
+#' @importFrom lazyeval expr_find
+#' @importFrom lazyeval lazy_dots
+DataConcatScatter.resample <- function(x, targetDim, ...){
+  x <- as.data.frame(x)
+  dataDftoMatrixDim(data = x,
+                    group = attributes(x)$vars[[1]],
+                    targetDim = targetDim,
                     method = expr_find(DataConcatScatter.matrix),
                     .dots = lazy_dots(...))
 }
@@ -30,7 +43,7 @@ DataConcatScatter.data.frame <- function(x, group, targetDim, ..., svdMethod = s
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #'
-DataConcatScatter.matrix <- function(...){
+DataConcatScatter.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
   matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
   names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
@@ -38,7 +51,7 @@ DataConcatScatter.matrix <- function(...){
   dataConcat <- Reduce(rbind, matrix_ls)
 
   M <- scatterMat(dataConcat)
-  projection <- t(do.call(lazy_eval(ls$svdMethod), list(M))$u[,1:lazy_eval(ls$targetDim)])
+  projection <- t(do.call(svdMethod, list(M))$u[,1:targetDim])
 
   nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
                                                       matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
