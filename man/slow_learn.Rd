@@ -4,6 +4,7 @@
 \alias{slow_learn}
 \alias{slow_learn.data.frame}
 \alias{slow_learn.grouped_df}
+\alias{slow_learn.resample}
 \title{Slow Learning Algorithm}
 \usage{
 slow_learn(x, ...)
@@ -12,17 +13,25 @@ slow_learn(x, ...)
   conditionallossValue, method, ...)
 
 \method{slow_learn}{grouped_df}(x, loss, totallossValue, conditionallossValue,
-  method = SYS, ...)
+  method, ...)
+
+\method{slow_learn}{resample}(x, loss, totallossValue, conditionallossValue,
+  method, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options such as group variable for}
+\item{...}{other options}
 
-\item{targetDim}{target dimension to reduce the data to}
+\item{group}{grouping variable}
 
-\item{svdMethod}{svd function used for dimesion reduction by default 
-svd in base is used}
+\item{loss}{loss function}
+
+\item{totallossValue}{total loss attained with overall reduction}
+
+\item{conditionallossValue}{loss attained for each dimension reduction}
+
+\item{method}{dimension reduction method}
 }
 \value{
 list of reduced data, projection matrix, 
@@ -36,5 +45,4 @@ Slow Learning Algorithm
 slow_learn(iris, group = Species, loss = conditional_loss, 
           totallossValue = .1, conditionallossValue = .01, method = SYS)
 }
-\keyword{internal}
 
