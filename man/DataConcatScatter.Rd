@@ -2,9 +2,12 @@
 % Please edit documentation in R/DataConcatScatter.R
 \name{DataConcatScatter}
 \alias{DataConcatScatter}
+\alias{DataConcatScatter.resample}
 \title{Data Concatenated and Scatter Matrix}
 \usage{
 DataConcatScatter(x, ...)
+
+\method{DataConcatScatter}{resample}(x, targetDim, ...)
 }
 \arguments{
 \item{x}{data}
