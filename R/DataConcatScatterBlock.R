@@ -23,7 +23,6 @@ DataConcatScatterBlock.data.frame <- function(x, group, targetDim, ...){
 
 #' @keywords internal
 #' @export
-#' @rdname DataConcatScatterBlock
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
 SAVE.resample <- function(x, targetDim, ...){
