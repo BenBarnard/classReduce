@@ -45,7 +45,7 @@ SY.grouped_df <- function(x, targetDim, ...){
 #' @rdname SY
 #' @importFrom lazyeval expr_find
 #' @importFrom lazyeval lazy_dots
-SY.resample <- function(x, ...){
+SY.resample <- function(x, targetDim, ...){
   x <- as.data.frame(x)
   dataDftoMatrixDim(data = x,
                     group = attributes(x)$vars[[1]],
