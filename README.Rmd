@@ -15,12 +15,7 @@ In developing sildR we found it useful to have it play nice with the "tidyverse"
 
 ## Installation
 
-You can install:
-
-the latest released version from CRAN with
-
-install.packages("slidR")
-the latest development version from github with
+You can install the latest development version from github with
 
 ```{r}
 if (packageVersion("devtools") < 1.6) {
