@@ -2,7 +2,6 @@ Package: slidR
 Type: Package
 Title: Slow Learning for Heterscedastic Data
 Version: 0.99
-Date: 2016-12-24
 Author: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
   person("Gabriel", "Odom", email = "gabriel_odom@baylor.edu", role = "aut, cre"),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = "aut"))
