@@ -2,8 +2,8 @@ Package: slidR
 Type: Package
 Title: Slow Learning for Heterscedastic Data
 Version: 0.99
-Author: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
-  person("Gabriel", "Odom", email = "gabriel_odom@baylor.edu", role = "aut, cre"),
+Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
+  person("Gabriel", "Odom", email = "gabriel_odom@baylor.edu", role = c("aut", "cre")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = "aut"))
 Maintainer: Ben Barnard <ben_barnard@baylor.edu>
 Description: Heterscedsatic linear dimension reduction methods with slow learning.
