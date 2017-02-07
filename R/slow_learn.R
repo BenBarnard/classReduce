@@ -25,7 +25,7 @@ slow_learn <- function(x, ...){
 #' @importFrom lazyeval lazy_dots
 #' @importFrom dplyr select
 #' @importFrom dplyr group_by_
-slow_learn.data.frame <- function(x, group, loss, totallossValue, 
+slow_learn.data.frame <- function(x, group, loss = conditional_loss, totallossValue, 
                                   conditionallossValue, method, ...){
   x <- group_by_(x, expr_find(group))
   ls <- lazy_dots(...)
@@ -43,7 +43,7 @@ slow_learn.data.frame <- function(x, group, loss, totallossValue,
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom dplyr ungroup
-slow_learn.grouped_df <- function(x, loss, totallossValue,
+slow_learn.grouped_df <- function(x, loss = conditional_loss, totallossValue,
                                   conditionallossValue,
                                   method, ...){
   ls <- lazy_dots(...)
@@ -107,7 +107,7 @@ slow_learn.grouped_df <- function(x, loss, totallossValue,
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
 #' @importFrom dplyr ungroup
-slow_learn.resample <- function(x, loss, totallossValue,
+slow_learn.resample <- function(x, loss = conditional_loss, totallossValue,
                                   conditionallossValue,
                                   method, ...){
   ls <- lazy_dots(...)
@@ -117,7 +117,7 @@ slow_learn.resample <- function(x, loss, totallossValue,
                             targetDim = ncol(x) - 1),
                        lazy_eval(ls)))
   reducedData_ <- x
-  
+
   values <- svd(reduced$M)$d
   energy <- cumsum(values) / sum(values)
   tarDim <- length(energy) -
@@ -140,7 +140,7 @@ slow_learn.resample <- function(x, loss, totallossValue,
     
     reducedData_ <- reduced$reducedData[, c(1:tarDim, ncol(reduced$reducedData))]
     
-    projection_ <- projection %*% reduced$projectionMatrix[, 1:tarDim]
+    projection_ <- reduced$projectionMatrix[1:tarDim,] %*% projection
     
     reduced <- do.call(method, c(list(x = reducedData_,
                                       targetDim = ncol(reducedData_) - 1),
@@ -155,9 +155,9 @@ slow_learn.resample <- function(x, loss, totallossValue,
     energyTotal_ <- do.call(loss, list(conditionalEnergy))
     iter <- iter + 1
   }
-  
+ 
   object <- list(reducedData = reducedData,
-                 projectionMatrix = t(projection),
+                 projectionMatrix = projection,
                  group = reduced$group,
                  discrimFunc = reduced$discrimFunc,
                  energyTotal = energyTotal)
