@@ -13,4 +13,3 @@ dataDftoMatrix(data, group, method, ..., .dots)
 Turn no a Tidy data frame into data matrix (helper function)
 }
 \keyword{internal}
-

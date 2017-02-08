@@ -18,4 +18,3 @@ SConcat(x, ...)
 Sample Covariances Concatenated
 }
 \keyword{internal}
-

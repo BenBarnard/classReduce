@@ -17,4 +17,3 @@ S_B(prior, xbar)
 Scatter Matrix Between
 }
 \keyword{internal}
-

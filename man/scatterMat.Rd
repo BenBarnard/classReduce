@@ -13,4 +13,3 @@ scatterMat(matrix)
 Sum of Squares (helper function)
 }
 \keyword{internal}
-

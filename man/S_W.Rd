@@ -15,4 +15,3 @@ S_W(prior, matrix_ls)
 Within group covarinace
 }
 \keyword{internal}
-

@@ -26,4 +26,3 @@ Matrix of maxN multivariate normal samples.
 Simulate Monte Carlo Samples from a Multivariate Normal Distribution
 }
 \keyword{internal}
-

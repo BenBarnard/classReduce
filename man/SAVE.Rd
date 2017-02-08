@@ -4,8 +4,8 @@
 \alias{SAVE}
 \alias{SAVE.data.frame}
 \alias{SAVE.grouped_df}
-\alias{SAVE.matrix}
 \alias{SAVE.resample}
+\alias{SAVE.matrix}
 \title{SAVE}
 \usage{
 SAVE(x, ...)
@@ -41,4 +41,3 @@ SAVE
 \examples{
 SAVE(iris, group = Species, targetDim = 1)
 }
-

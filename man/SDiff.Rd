@@ -18,4 +18,3 @@ SDiff(x, ...)
 Sample Covariance Differences Concatenated
 }
 \keyword{internal}
-

@@ -16,4 +16,3 @@ The trace of a square matrix x.
 Calculates the trace of a square matrix.
 }
 \keyword{internal}
-

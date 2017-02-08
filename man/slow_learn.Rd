@@ -9,14 +9,14 @@
 \usage{
 slow_learn(x, ...)
 
-\method{slow_learn}{data.frame}(x, group, loss, totallossValue,
+\method{slow_learn}{data.frame}(x, group, loss = conditional_loss,
+  totallossValue, conditionallossValue, method, ...)
+
+\method{slow_learn}{grouped_df}(x, loss = conditional_loss, totallossValue,
   conditionallossValue, method, ...)
 
-\method{slow_learn}{grouped_df}(x, loss, totallossValue, conditionallossValue,
-  method, ...)
-
-\method{slow_learn}{resample}(x, loss, totallossValue, conditionallossValue,
-  method, ...)
+\method{slow_learn}{resample}(x, loss = conditional_loss, totallossValue,
+  conditionallossValue, method, ...)
 }
 \arguments{
 \item{x}{data}
@@ -45,4 +45,3 @@ Slow Learning Algorithm
 slow_learn(iris, group = Species, loss = conditional_loss, 
           totallossValue = .1, conditionallossValue = .01, method = SYS)
 }
-

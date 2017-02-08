@@ -23,4 +23,3 @@ discrimination function.
 \examples{
 classify(LD(iris, group = Species, targetDim = 1))
 }
-

@@ -17,4 +17,3 @@ matBlocks(x, rows, columns)
 Helper for Data Concat Scatter Block
 }
 \keyword{internal}
-

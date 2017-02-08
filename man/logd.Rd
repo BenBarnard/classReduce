@@ -13,4 +13,3 @@ logd(matrix)
 Log of the SVD values of a matrix
 }
 \keyword{internal}
-

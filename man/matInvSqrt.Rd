@@ -13,4 +13,3 @@ matInvSqrt(matrix)
 Matrix Square Root Inverse
 }
 \keyword{internal}
-

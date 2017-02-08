@@ -4,8 +4,8 @@
 \alias{LD}
 \alias{LD.data.frame}
 \alias{LD.grouped_df}
-\alias{LD.matrix}
 \alias{LD.resample}
+\alias{LD.matrix}
 \title{LD}
 \usage{
 LD(x, ...)
@@ -41,4 +41,3 @@ LD
 \examples{
 LD(iris, group = Species, targetDim = 1)
 }
-

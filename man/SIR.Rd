@@ -4,8 +4,8 @@
 \alias{SIR}
 \alias{SIR.data.frame}
 \alias{SIR.grouped_df}
-\alias{SIR.matrix}
 \alias{SIR.resample}
+\alias{SIR.matrix}
 \title{Sliced Inverse Regression}
 \usage{
 SIR(x, ...)
@@ -41,4 +41,3 @@ Sliced Inverse Regression
 \examples{
 SIR(iris, group = Species, targetDim = 1)
 }
-

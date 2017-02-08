@@ -19,4 +19,3 @@ Original(x, group, targetDim, svdMethod)
 Original Data
 }
 \keyword{internal}
-

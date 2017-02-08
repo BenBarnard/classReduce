@@ -18,4 +18,3 @@ DataConcatScatter(x, ...)
 Data Concatenated and Scatter Matrix
 }
 \keyword{internal}
-

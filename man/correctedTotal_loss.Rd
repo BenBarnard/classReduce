@@ -9,4 +9,3 @@ correctedTotal_loss()
 \description{
 Corrected Total Loss
 }
-

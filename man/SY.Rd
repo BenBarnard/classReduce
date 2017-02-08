@@ -4,8 +4,8 @@
 \alias{SY}
 \alias{SY.data.frame}
 \alias{SY.grouped_df}
-\alias{SY.matrix}
 \alias{SY.resample}
+\alias{SY.matrix}
 \title{SY}
 \usage{
 SY(x, ...)
@@ -41,4 +41,3 @@ SY
 \examples{
 SY(iris, group = Species, targetDim = 1)
 }
-
