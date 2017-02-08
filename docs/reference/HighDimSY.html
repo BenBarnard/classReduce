@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Slow Learning Algorithm — slow_learn • slidR</title>
+<title>High Dimensional SY — HighDimSY • slidR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,26 +74,26 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Slow Learning Algorithm</h1>
+    <h1>High Dimensional SY</h1>
     </div>
 
     
-    <p>Slow Learning Algorithm</p>
+    <p>High Dimensional SY</p>
     
 
-    <pre><span class='fu'>slow_learn</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre><span class='fu'>HighDimSY</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>slow_learn</span>(<span class='no'>x</span>, <span class='no'>group</span>, <span class='kw'>loss</span> <span class='kw'>=</span> <span class='no'>conditional_loss</span>,
-  <span class='no'>totallossValue</span>, <span class='no'>conditionallossValue</span>, <span class='no'>method</span>, <span class='no'>...</span>)
+<span class='fu'>HighDimSY</span>(<span class='no'>x</span>, <span class='no'>group</span>, <span class='no'>targetDim</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for grouped_df</span>
-<span class='fu'>slow_learn</span>(<span class='no'>x</span>, <span class='kw'>loss</span> <span class='kw'>=</span> <span class='no'>conditional_loss</span>, <span class='no'>totallossValue</span>,
-  <span class='no'>conditionallossValue</span>, <span class='no'>method</span>, <span class='no'>...</span>)
+<span class='fu'>HighDimSY</span>(<span class='no'>x</span>, <span class='no'>targetDim</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for resample</span>
-<span class='fu'>slow_learn</span>(<span class='no'>x</span>, <span class='kw'>loss</span> <span class='kw'>=</span> <span class='no'>conditional_loss</span>, <span class='no'>totallossValue</span>,
-  <span class='no'>conditionallossValue</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>HighDimSY</span>(<span class='no'>x</span>, <span class='no'>targetDim</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>HighDimSY</span>(<span class='no'>...</span>, <span class='no'>targetDim</span>, <span class='kw'>svdMethod</span> <span class='kw'>=</span> <span class='no'>svd</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -103,46 +103,42 @@
       <dd>other options</dd>
       <dt>group</dt>
       <dd>grouping variable</dd>
-      <dt>loss</dt>
-      <dd>loss function</dd>
-      <dt>totallossValue</dt>
-      <dd>total loss attained with overall reduction</dd>
-      <dt>conditionallossValue</dt>
-      <dd>loss attained for each dimension reduction</dd>
-      <dt>method</dt>
-      <dd>dimension reduction method</dd>
+      <dt>targetDim</dt>
+      <dd>target dimension to reduce the data to</dd>
+      <dt>svdMethod</dt>
+      <dd>svd function used for dimesion reduction by default 
+svd in base is used</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>list of reduced data, projection matrix, 
          group variable, discrimination function, 
-         m matrix and dimension reduction method used.</p>
+         m matrix.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>slow_learn</span>(<span class='no'>iris</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>Species</span>, <span class='kw'>loss</span> <span class='kw'>=</span> <span class='no'>conditional_loss</span>,
-          <span class='kw'>totallossValue</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>conditionallossValue</span> <span class='kw'>=</span> <span class='fl'>.01</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>SYS</span>)</div><div class='output co'>#&gt; $reducedData
+    <pre class="examples"><div class='input'><span class='fu'>HighDimSY</span>(<span class='no'>iris</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>Species</span>, <span class='kw'>targetDim</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; $reducedData
 #&gt; Source: local data frame [150 x 2]
 #&gt; Groups: Species [3]
 #&gt; 
-#&gt;          V1 Species
-#&gt;       &lt;dbl&gt;  &lt;fctr&gt;
-#&gt; 1  2.563807  setosa
-#&gt; 2  2.505311  setosa
-#&gt; 3  2.354615  setosa
-#&gt; 4  2.346557  setosa
-#&gt; 5  2.497705  setosa
-#&gt; 6  2.583149  setosa
-#&gt; 7  2.216109  setosa
-#&gt; 8  2.537257  setosa
-#&gt; 9  2.237980  setosa
-#&gt; 10 2.593641  setosa
+#&gt;           V1 Species
+#&gt;        &lt;dbl&gt;  &lt;fctr&gt;
+#&gt; 1  -2.491713  setosa
+#&gt; 2  -2.490590  setosa
+#&gt; 3  -2.313681  setosa
+#&gt; 4  -2.466945  setosa
+#&gt; 5  -2.446499  setosa
+#&gt; 6  -2.869738  setosa
+#&gt; 7  -2.378313  setosa
+#&gt; 8  -2.558495  setosa
+#&gt; 9  -2.341068  setosa
+#&gt; 10 -2.528190  setosa
 #&gt; # ... with 140 more rows
 #&gt; 
 #&gt; $projectionMatrix
-#&gt;           [,1]      [,2]      [,3]       [,4]
-#&gt; [1,] 0.3904516 0.2202127 0.7827046 -0.4317724
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,] -0.3245611 0.1275797 -0.8648099 -0.3612303
 #&gt; 
 #&gt; $group
 #&gt; Species
@@ -150,8 +146,17 @@
 #&gt; $discrimFunc
 #&gt; qda
 #&gt; 
-#&gt; $energyTotal
-#&gt; [1] 0.07331995
+#&gt; $M
+#&gt;                init        Sepal.Length Sepal.Width Petal.Length Petal.Width
+#&gt; Sepal.Length  0.930  1.582   0.14218367 -0.01403265   0.16654286  0.04544898
+#&gt; Sepal.Width  -0.658 -0.454  -0.01403265 -0.04522041   0.07095510  0.03190612
+#&gt; Petal.Length  2.798  4.090   0.16654286  0.07095510   0.19065714  0.06703265
+#&gt; Petal.Width   1.080  1.780   0.04544898  0.03190612   0.06703265  0.02800000
+#&gt;              Sepal.Length  Sepal.Width Petal.Length Petal.Width
+#&gt; Sepal.Length  0.280093878 -0.005453061   0.28693469  0.03876327
+#&gt; Sepal.Width  -0.005453061 -0.039685714   0.05968163  0.03833061
+#&gt; Petal.Length  0.286934694  0.059681633   0.27442857  0.04275510
+#&gt; Petal.Width   0.038763265  0.038330612   0.04275510  0.06432653
 #&gt; 
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;reduced&quot;</div></pre>
