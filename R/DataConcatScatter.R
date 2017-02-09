@@ -1,7 +1,6 @@
 #' Data Concatenated and Scatter Matrix
 #'
-#' @param x data
-#' @param ... other options
+#' @inheritParams SYS
 #'
 #' @keywords internal
 #' @export

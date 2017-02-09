@@ -1,9 +1,6 @@
 #' Original Data
 #'
-#' @param x data
-#' @param group grouping varible
-#' @param targetDim target dimension
-#' @param svdMethod svd function
+#' @inheritParams SYS
 #'
 #' @export
 #' @keywords internal

@@ -12,7 +12,9 @@ SConcat(x, ...)
 \arguments{
 \item{x}{data}
 
-\item{...}{other variables}
+\item{...}{other options}
+
+\item{targetDim}{target dimension to reduce the data to}
 }
 \description{
 Sample Covariances Concatenated

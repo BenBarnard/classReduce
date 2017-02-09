@@ -13,6 +13,8 @@ DataConcatScatter(x, ...)
 \item{x}{data}
 
 \item{...}{other options}
+
+\item{targetDim}{target dimension to reduce the data to}
 }
 \description{
 Data Concatenated and Scatter Matrix

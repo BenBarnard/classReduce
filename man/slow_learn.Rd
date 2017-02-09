@@ -30,8 +30,6 @@ slow_learn(x, ...)
 \item{totallossValue}{total loss attained with overall reduction}
 
 \item{conditionallossValue}{loss attained for each dimension reduction}
-
-\item{method}{dimension reduction method}
 }
 \value{
 list of reduced data, projection matrix, 

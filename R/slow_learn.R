@@ -1,12 +1,9 @@
 #' Slow Learning Algorithm
 #'
-#' @param x data
-#' @param group grouping variable
-#' @param method dimension reduction method
+#' @inheritParams SYS
 #' @param loss loss function
 #' @param totallossValue total loss attained with overall reduction
 #' @param conditionallossValue loss attained for each dimension reduction
-#' @param ... other options
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 

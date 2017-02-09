@@ -1,7 +1,6 @@
 #'Sample Covariances Concatenated
 #'
-#' @param x data
-#' @param ... other variables
+#' @inheritParams SYS
 #'
 #' @export
 #' @keywords internal

@@ -1,11 +1,6 @@
 #'SY
 #'
-#' @param x data
-#' @param group grouping variable
-#' @param targetDim target dimension to reduce the data to
-#' @param svdMethod svd function used for dimesion reduction by default 
-#'                  svd in base is used
-#' @param ... other options  
+#' @inheritParams SYS
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 

@@ -9,11 +9,12 @@ Original(x, group, targetDim, svdMethod)
 \arguments{
 \item{x}{data}
 
-\item{group}{grouping varible}
+\item{group}{grouping variable}
 
-\item{targetDim}{target dimension}
+\item{targetDim}{target dimension to reduce the data to}
 
-\item{svdMethod}{svd function}
+\item{svdMethod}{svd function used for dimesion reduction by default 
+svd in base is used}
 }
 \description{
 Original Data
