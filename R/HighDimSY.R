@@ -55,6 +55,7 @@ HighDimSY.resample <- function(x, targetDim, ...){
 #' @importFrom stringr str_replace
 #' @importFrom lazyeval lazy_dots
 #' @importFrom lazyeval lazy_eval
+#' @importFrom sparsediscrim dqda
 #' @importFrom stats cov
 HighDimSY.matrix <- function(..., targetDim, svdMethod = svd){
   ls <- lazy_dots(...)
@@ -85,7 +86,7 @@ HighDimSY.matrix <- function(..., targetDim, svdMethod = svd){
                                          paste(ls$group$expr)),
                  projectionMatrix = projection,
                  group = ls$group$expr,
-                 discrimFunc = expr_find(qda),
+                 discrimFunc = expr_find(dqda),
                  M = M)
   class(object) <- "reduced"
   object

@@ -20,4 +20,4 @@ Imports:
     MASS,
     covEst,
     reshape2
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
