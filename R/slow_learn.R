@@ -4,6 +4,7 @@
 #' @param loss loss function
 #' @param totallossValue total loss attained with overall reduction
 #' @param conditionallossValue loss attained for each dimension reduction
+#' @param method method used in slow learn algorithm
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 
