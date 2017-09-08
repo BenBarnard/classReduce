@@ -1,0 +1,70 @@
+---
+title: "slidR Field Notes"
+author: "Gabriel J. Odom"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document will serve as a "flow of thought" for how Ben and I decided to restructure the `slidR` package. This work is from a brainstorming session on 8 September, 2017, due to the fact that I had a few days off from work at UM because of Irma.
+
+## Purpose of the `slidR` Package
+
+Subject matter experts in machine learning often look to reduce the complexity of their classification or attribution problems through *linear dimension reduction* (LDR). This package seeks to wrap up a few different LDR methods for classification, regression, and survival analysis. Currently, the lion's share of functional support is for classification, but we are adding other analysis patterns as time progresses.
+
+## Data Analysis Workflow with `slidR`
+
+We would like to establish a data analysis workflow for this package:
+
+  1. Center and scale the data.
+    - The predictors should be both centered and scaled, while the response vector need only be centered.
+    - For classification and other methods which require completely partitioned testing and training data sets, save the centering vector and scaling matrix from the training data externally.
+    - We assume that the data passed to this workflow is appropriately centered and scaled by an external process.
+  2. Reduce the dimension of the predictor matrix. Arguments are `data`, `reductMethod`, and `projectionRoutine`.
+    - The `data` argument can take in the following:
+        + response and predictor (both as data frames or matrices).
+        + list of data frames or matrices
+        + formula and data (data as a data frame or matrix)
+        + resample or permute objects (from the `modelR` package)
+        + grouped_df
+        + tibble
+    - This function will employ `UseMethod` functionality to account for the data being in different classes. Classes we support are:
+        + `data.frame`
+        + `resample`
+        + `matrix`
+        + `tibble` (in progress)
+        + `grouped_df`
+    - This function will wrangle the data from its current class into a list of matrices.
+        + The chosen `reductMethod` will govern how the function assumes the inputs should be discussed.
+        + For example, if `reductMethod = LD`, then we assume the user is trying to classify observations and that the response is a grouping variable.
+        + If response is an $n \times 2$ matrix, then survival analysis is the assumed technique and the response is assumed to be a survival pair of event times and censoring indicator (in that order).
+        + If response is a factor, then classification is the assumed technique.
+        + Otherwise, regression is assumed. The list will have only one matrix.
+    - Given an appropriate list of matrices, call the chosen `reductionMethod`. These are different estimators of the data sufficiency (or **M**) matrix. These methods all return a projection matrix.
+        + Loog and Duin (2004), called `LD`
+        + Ounpreseuth et al (2015), called `SY`
+        + Odom et al (in prep), called `SYS`
+        + `SIR` from Li (1992)
+        + `SAVE` from Cook and Weisberg (1992)
+        + `PCA` (our version of the `eigen` function from base R); use the sample covariance matrix as the **M** matrix estimate
+        + `identity` (use the data itself as its **M** matrix)
+    - Given the SVD of our estimate of **M**, **M_hat** choose the appropriate columns of **M_hat** according to the function specified as the argument of `projectRoutine`. These can be functions like
+        + Choose the first $k$ columns of the projection matrix
+        + Choose the $q$ columns which preserve a specified proportion of the variance (relative sums of egienvalues)
+        + Some Principal Component ordering scheme (like Canonical Variates Analysis)
+    - Multiply the list of matrices by the projection matrix to create a list of reduced data matrices
+    - Return a list of:
+        + The list reduced matrices
+        + The list of unreduced matrices
+        + The complete projection matrix U
+        + Additional (optional) information from the projection routine
+  3. Perform analysis. These options must match the type of response variable.
+    - Classification and Prediction
+    - Logistic Regression and Attribution
+    - Regression (Least Squares) and Prediction
+    - Regression (Least Squares) and Attribution
+    - Survival (Cox PH) and Attribution
+

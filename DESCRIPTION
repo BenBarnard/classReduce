@@ -11,7 +11,9 @@ License: GPL-2
 LazyData: TRUE
 Suggests:
     testthat,
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Imports:
     plyr,
     dplyr,
@@ -23,3 +25,4 @@ Imports:
     sparsediscrim
 Remotes: benbarnard/covEst
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr
