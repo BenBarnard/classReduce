@@ -1,12 +1,12 @@
-Package: slidR
+Package: hldr
 Type: Package
-Title: Slow Learning for Heterscedastic Data
+Title: Heteroscedastic Linear Dimension Reduction
 Version: 0.99
 Authors@R: c(person("Ben", "Barnard", email = "ben_barnard@baylor.edu", role = c("aut", "cre")),
   person("Gabriel", "Odom", email = "gabriel_odom@baylor.edu", role = c("aut")),
   person("Dean", "Young", email = "dean_young@baylor.edu", role = "aut"))
 Maintainer: Ben Barnard <ben_barnard@baylor.edu>
-Description: Heterscedsatic linear dimension reduction methods with slow learning.
+Description: Heterscedsatic linear dimension reduction methods.
 License: GPL-2
 LazyData: TRUE
 Suggests:
@@ -21,8 +21,8 @@ Imports:
     lazyeval,
     MASS,
     covEst,
-    reshape2,
-    sparsediscrim
+    reshape2
 Remotes: benbarnard/covEst
 RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

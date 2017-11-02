@@ -27,13 +27,13 @@ SY(x, ...)
 
 \item{targetDim}{target dimension to reduce the data to}
 
-\item{svdMethod}{svd function used for dimesion reduction by default 
+\item{svdMethod}{svd function used for dimesion reduction by default
 svd in base is used}
 }
 \value{
-list of reduced data, projection matrix, 
-         group variable, discrimination function, 
-         m matrix.
+list of reduced data, projection matrix,
+group variable, discrimination function,
+m matrix.
 }
 \description{
 SY

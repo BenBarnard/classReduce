@@ -1,4 +1,4 @@
 library(testthat)
-library(slidR)
+library(hldr)
 
-test_check("slidR")
+test_check("hldr")
