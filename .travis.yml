@@ -12,3 +12,5 @@ r:
   - devel
 after_success:
   - Rscript -e 'covr::codecov()'
+r_github_packages:
+  - hadley/devtools
