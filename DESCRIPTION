@@ -20,9 +20,9 @@ Imports:
     stringr,
     lazyeval,
     MASS,
-    covEst,
+    covEstR,
     reshape2
-Remotes: benbarnard/covEst
+Remotes: benbarnard/covEstR
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
