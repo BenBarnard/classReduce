@@ -22,9 +22,9 @@ matrix:
         skip_cleanup: true
         github_token: $GITHUB_PAT
         on:
-          branch: master
+          branch: devel
         local_dir: ${TRAVIS_BUILD_DIR}/docs
-        target_branch: master-web
+        target_branch: preview
     - r: release
       os: osx
   exclude:
