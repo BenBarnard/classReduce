@@ -2,36 +2,19 @@
 % Please edit documentation in R/SYS.R
 \name{SYS}
 \alias{SYS}
-\alias{SYS.data.frame}
-\alias{SYS.grouped_df}
-\alias{SYS.resample}
-\alias{SYS.matrix}
 \title{SYS}
 \usage{
-SYS(x, ...)
-
-\method{SYS}{data.frame}(x, group, targetDim, ...)
-
-\method{SYS}{grouped_df}(x, targetDim, ...)
-
-\method{SYS}{resample}(x, targetDim, ...)
-
-\method{SYS}{matrix}(..., group, targetDim, svdMethod = svd,
-  covest = Haff_shrinkage)
+SYS(x, svdMethod = svd, covEst = Haff_shrinkage, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options}
-
-\item{group}{grouping variable}
-
-\item{targetDim}{target dimension to reduce the data to}
-
 \item{svdMethod}{svd function used for dimesion reduction by default
 svd in base is used}
 
-\item{covest}{covariance estimator used forming M matrix}
+\item{covEst}{covariance estimator used forming M matrix}
+
+\item{...}{options passed to covEst and svd methods}
 }
 \value{
 list of reduced data, projection matrix,
@@ -40,7 +23,4 @@ m matrix.
 }
 \description{
 SYS
-}
-\examples{
-SYS(iris, group = Species, targetDim = 1)
 }

@@ -6,59 +6,12 @@
 #'          group variable, discrimination function, 
 #'          m matrix and dimension reduction method used.
 #' @export
-#'
-#' @examples LD(iris, group = Species, targetDim = 1)
-LD <- function(x, ...){
-  UseMethod("LD")
-}
-
-#' @rdname LD
-#' @export
-#' @importFrom lazyeval expr_find
-LD.data.frame <- function(x, group, targetDim, ...){
-  dataDftoMatrix(data = x,
-                    group = expr_find(group),
-                    targetDim = targetDim,
-                    method = expr_find(LD.matrix),
-                    .dots = lazy_dots(...))
-}
-
-#' @rdname LD
-#' @export
-#' @importFrom lazyeval expr_find
-LD.grouped_df <- function(x, targetDim, ...){
-  dataDftoMatrix(data = x,
-                    group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    method = expr_find(LD.matrix),
-                    .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname LD
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-LD.resample <- function(x, targetDim, ...){
-  x <- as.data.frame(x)
-  dataDftoMatrix(data = x,
-                    group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    method = expr_find(LD.matrix),
-                    .dots = lazy_dots(...))
-}
-
-#' @rdname LD
-#' @export
-#' @importFrom stringr str_detect
-#' @importFrom stringr str_replace
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom stats cov
+#' 
 #' @importFrom utils combn
-LD.matrix <- function(..., targetDim, svdMethod = svd){
-  ls <- lazy_dots(...)
-  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
-  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
+#'
+LD <-  function(x, svdMethod = svd, ...){
+
+  matrix_ls <- x
 
   prior <- prior(matrix_ls)
   xbar <- lapply(matrix_ls, colMeans)
@@ -113,21 +66,13 @@ LD.matrix <- function(..., targetDim, svdMethod = svd){
 
   M <- Reduce(`+`, mld_fun)
 
-  projection <- t(do.call(svdMethod, list(M))$u[,1:targetDim])
+  projection <- t(do.call(svdMethod, list(M))$u)
 
-  nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
-                                                      matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
-  originalData <- Reduce(rbind, matrix_ls)
-  names(nameVec) <- paste(ls$group$expr)
-  reducedData <- t(projection %*% t(originalData))
-
-  object <- list(reducedData = group_by_(cbind(as.data.frame(reducedData), nameVec),
-                                         paste(ls$group$expr)),
+  projectedData <- lapply(matrix_ls, FUN = projection_func, proj = projection)
+  
+  object <- list(projectedData = projectedData,
                  projectionMatrix = projection,
-                 group = ls$group$expr,
-                 discrimFunc = expr_find(qda),
                  M = M,
                  method = LD)
-  class(object) <- "reduced"
   object
 }

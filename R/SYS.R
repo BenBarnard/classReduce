@@ -1,82 +1,30 @@
 #'SYS
 #'
 #' @param x data
-#' @param group grouping variable
-#' @param targetDim target dimension to reduce the data to
 #' @param svdMethod svd function used for dimesion reduction by default 
 #'                  svd in base is used
-#' @param covest covariance estimator used forming M matrix
-#' @param ... other options
+#' @param covEst covariance estimator used forming M matrix
+#' @param ... options passed to covEst and svd methods
 #'
 #' @return list of reduced data, projection matrix, 
 #'          group variable, discrimination function, 
 #'          m matrix.
 #' @export
 #'
-#' @examples SYS(iris, group = Species, targetDim = 1)
-SYS <- function(x, ...){
-  UseMethod("SYS")
-}
-
-#' @export
-#' @rdname SYS
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-SYS.data.frame <- function(x, group, targetDim, ...){
-  dataDftoMatrix(data = x,
-                    group = expr_find(group),
-                    targetDim = targetDim,
-                    method = expr_find(SYS.matrix),
-                    .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname SYS
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-SYS.grouped_df <- function(x, targetDim, ...){
-  dataDftoMatrix(data = x,
-                    group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    method = expr_find(SYS.matrix),
-                    .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname SYS
-#' @importFrom lazyeval expr_find
-#' @importFrom lazyeval lazy_dots
-SYS.resample <- function(x, targetDim, ...){
-  x <- as.data.frame(x)
-  dataDftoMatrix(data = x,
-                    group = attributes(x)$vars[[1]],
-                    targetDim = targetDim,
-                    method = expr_find(SYS.matrix),
-                    .dots = lazy_dots(...))
-}
-
-#' @export
-#' @rdname SYS
-#' @importFrom stringr str_detect
-#' @importFrom stringr str_replace
-#' @importFrom lazyeval lazy_dots
-#' @importFrom lazyeval lazy_eval
-#' @importFrom dplyr group_by_
-#' @importFrom covEstR Haff_shrinkage
-#' @importFrom stats cov
-SYS.matrix <- function(..., group, targetDim, svdMethod = svd, covest = Haff_shrinkage){
-  ls <- lazy_dots(...)
-  matrix_ls <- lazy_eval(ls[str_detect(names(ls), "x.")])
-  names(matrix_ls) <- str_replace(names(matrix_ls), "x.", "")
+SYS <- function(x, svdMethod = svd, covEst = Haff_shrinkage, ...){
+  matrix_ls <- x
+  
+  ls <- list(...)
+  ls$data <- matrix_ls
 
   xbar <- lapply(matrix_ls, colMeans)
   covs <- lapply(matrix_ls, cov)
   invCovs <- lapply(covs, solve)
 
-  StildeInv_ls <- lapply(matrix_ls, function(x, data){
-    do.call(covest,
-            c(x = list(x), data = list(data)))
-    }, data = matrix_ls)
+  StildeInv_ls <- lapply(matrix_ls, function(x, ls){
+    ls$x <- x
+    do.call(covEst, ls)
+    }, ls = ls)
 
   projectedMeanDiffs <- Reduce(cbind, mapply(function(x, y){
     x %*% y - StildeInv_ls[[1]] %*% xbar[[1]]
@@ -86,20 +34,14 @@ SYS.matrix <- function(..., group, targetDim, svdMethod = svd, covest = Haff_shr
 
   M <- cbind(projectedMeanDiffs, covsDiffs)
 
-  projection <- t(do.call(svdMethod, list(M))$u[,1:targetDim])
+  projection <- t(do.call(svdMethod, list(M))$u)
 
-  nameVec <- as.data.frame(as.matrix(Reduce(c, mapply(function(x, y){rep(y, nrow(x))},
-                                                      matrix_ls, names(matrix_ls), SIMPLIFY = FALSE))))
-  originalData <- Reduce(rbind, matrix_ls)
-  names(nameVec) <- paste(expr_find(group))
-  reducedData <- t(projection %*% t(originalData))
+  projectedData <- lapply(matrix_ls, FUN = projection_func, proj = projection)
 
-  object <- list(reducedData = group_by_(cbind(as.data.frame(reducedData), nameVec),
-                                        paste(expr_find(group))),
+  object <- list(projectedData = projectedData,
                  projectionMatrix = projection,
-                 group = expr_find(group),
-                 discrimFunc = expr_find(qda),
-                 M = M)
-  class(object) <- "reduced"
+                 M = M,
+                 method = SYS,
+                 covEst = covEst)
   object
 }

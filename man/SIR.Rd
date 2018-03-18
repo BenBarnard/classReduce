@@ -2,33 +2,17 @@
 % Please edit documentation in R/SIR.R
 \name{SIR}
 \alias{SIR}
-\alias{SIR.data.frame}
-\alias{SIR.grouped_df}
-\alias{SIR.resample}
-\alias{SIR.matrix}
 \title{Sliced Inverse Regression}
 \usage{
-SIR(x, ...)
-
-\method{SIR}{data.frame}(x, group, targetDim, ...)
-
-\method{SIR}{grouped_df}(x, targetDim, ...)
-
-\method{SIR}{resample}(x, targetDim, ...)
-
-\method{SIR}{matrix}(..., targetDim, svdMethod = svd)
+SIR(x, svdMethod = svd, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options}
-
-\item{group}{grouping variable}
-
-\item{targetDim}{target dimension to reduce the data to}
-
 \item{svdMethod}{svd function used for dimesion reduction by default
 svd in base is used}
+
+\item{...}{options passed to covEst and svd methods}
 }
 \value{
 list of reduced data, projection matrix,
@@ -37,7 +21,4 @@ m matrix.
 }
 \description{
 Sliced Inverse Regression
-}
-\examples{
-SIR(iris, group = Species, targetDim = 1)
 }

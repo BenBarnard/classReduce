@@ -2,33 +2,17 @@
 % Please edit documentation in R/SY.R
 \name{SY}
 \alias{SY}
-\alias{SY.data.frame}
-\alias{SY.grouped_df}
-\alias{SY.resample}
-\alias{SY.matrix}
 \title{SY}
 \usage{
-SY(x, ...)
-
-\method{SY}{data.frame}(x, group, targetDim, ...)
-
-\method{SY}{grouped_df}(x, targetDim, ...)
-
-\method{SY}{resample}(x, targetDim, ...)
-
-\method{SY}{matrix}(..., targetDim, svdMethod = svd)
+SY(x, svdMethod = svd, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options}
-
-\item{group}{grouping variable}
-
-\item{targetDim}{target dimension to reduce the data to}
-
 \item{svdMethod}{svd function used for dimesion reduction by default
 svd in base is used}
+
+\item{...}{options passed to covEst and svd methods}
 }
 \value{
 list of reduced data, projection matrix,
@@ -37,7 +21,4 @@ m matrix.
 }
 \description{
 SY
-}
-\examples{
-SY(iris, group = Species, targetDim = 1)
 }

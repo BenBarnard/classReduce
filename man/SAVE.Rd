@@ -2,33 +2,17 @@
 % Please edit documentation in R/SAVE.R
 \name{SAVE}
 \alias{SAVE}
-\alias{SAVE.data.frame}
-\alias{SAVE.grouped_df}
-\alias{SAVE.resample}
-\alias{SAVE.matrix}
 \title{SAVE}
 \usage{
-SAVE(x, ...)
-
-\method{SAVE}{data.frame}(x, group, targetDim, ...)
-
-\method{SAVE}{grouped_df}(x, targetDim, ...)
-
-\method{SAVE}{resample}(x, targetDim, ...)
-
-\method{SAVE}{matrix}(..., targetDim, svdMethod = svd)
+SAVE(x, svdMethod = svd, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options}
-
-\item{group}{grouping variable}
-
-\item{targetDim}{target dimension to reduce the data to}
-
 \item{svdMethod}{svd function used for dimesion reduction by default
 svd in base is used}
+
+\item{...}{options passed to covEst and svd methods}
 }
 \value{
 list of reduced data, projection matrix,
@@ -37,7 +21,4 @@ m matrix.
 }
 \description{
 SAVE
-}
-\examples{
-SAVE(iris, group = Species, targetDim = 1)
 }

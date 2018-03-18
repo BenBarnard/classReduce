@@ -2,33 +2,17 @@
 % Please edit documentation in R/LD.R
 \name{LD}
 \alias{LD}
-\alias{LD.data.frame}
-\alias{LD.grouped_df}
-\alias{LD.resample}
-\alias{LD.matrix}
 \title{LD}
 \usage{
-LD(x, ...)
-
-\method{LD}{data.frame}(x, group, targetDim, ...)
-
-\method{LD}{grouped_df}(x, targetDim, ...)
-
-\method{LD}{resample}(x, targetDim, ...)
-
-\method{LD}{matrix}(..., targetDim, svdMethod = svd)
+LD(x, svdMethod = svd, ...)
 }
 \arguments{
 \item{x}{data}
 
-\item{...}{other options}
-
-\item{group}{grouping variable}
-
-\item{targetDim}{target dimension to reduce the data to}
-
 \item{svdMethod}{svd function used for dimesion reduction by default
 svd in base is used}
+
+\item{...}{options passed to covEst and svd methods}
 }
 \value{
 list of reduced data, projection matrix,
@@ -37,7 +21,4 @@ m matrix and dimension reduction method used.
 }
 \description{
 LD
-}
-\examples{
-LD(iris, group = Species, targetDim = 1)
 }

@@ -12,7 +12,6 @@
 #'
 #' @export
 #' 
-#' @examples classify(LD(iris, group = Species, targetDim = 1))
 classify <- function(x, ...){
   UseMethod("classify")
 }

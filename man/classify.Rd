@@ -20,6 +20,3 @@ group variable and the method for dimension reduction
 Given a dimension reduced data set a classifier is built using a selected
 discrimination function.
 }
-\examples{
-classify(LD(iris, group = Species, targetDim = 1))
-}
