@@ -15,3 +15,11 @@ test_that("reduce supplies a M matrix", {
 test_that("reduce supplies the method SYS", {
   expect_equal(reduce(dataMat, targetDim = 2)$method, SYS)
 })
+
+test_that("reduce using group = Species still supplies SYS", {
+  expect_equal(projection_matrix(iris, group = Species)$method, SYS)
+})
+
+test_that("reduce using group = 'Species' still supplies SYS", {
+  expect_equal(projection_matrix(iris, group = "Species")$method, SYS)
+})
