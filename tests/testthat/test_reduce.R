@@ -17,9 +17,9 @@ test_that("reduce supplies the method SYS", {
 })
 
 test_that("reduce using group = Species still supplies SYS", {
-  expect_equal(reduce(iris, group = Species)$method, SYS)
+  expect_equal(reduce(iris, group = Species, targetDim = 3)$method, SYS)
 })
 
 test_that("reduce using group = 'Species' still supplies SYS", {
-  expect_equal(reduce(iris, group = "Species")$method, SYS)
+  expect_equal(reduce(iris, group = "Species", targetDim = 3)$method, SYS)
 })
