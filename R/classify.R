@@ -25,7 +25,7 @@ classify <- function(x, ...){
 #'
 classify.reduced <- function(x, ...){
 
-  discrimFunc <- x$discrimFunc
+  discrimFunc <- qda
 
   if(any(class(x) %in% paste(discrimFunc))){stop(cat("Object already Classified"))}
 

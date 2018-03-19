@@ -2,14 +2,11 @@
 % Please edit documentation in R/projection_matrix.R
 \name{projection_matrix}
 \alias{projection_matrix}
-\alias{projection_matrix.reduced}
 \alias{projection_matrix.list}
 \alias{projection_matrix.default}
 \title{Projection Matrix}
 \usage{
 projection_matrix(x, ...)
-
-\method{projection_matrix}{reduced}(x, ...)
 
 \method{projection_matrix}{list}(x, method = SYS, ...)
 

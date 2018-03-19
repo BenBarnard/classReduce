@@ -19,17 +19,41 @@ reduce <- function(x, method, targetDim, ...){
 #' @export
 reduce.list <- function(x, method = SYS, targetDim, ...){
   ls <- list(...)
+  ls$x <- x
+  obj <- do.call(method, ls)
   
+  tarDim <- check_targetDimType(targetDim = targetDim, x = x)
   
+  obj$projectionMatrix <- obj$projectionMatrix[1:tarDim,]
+  obj$projectedData <- lapply(obj$projectedData, FUN = function(x){x[,1:tarDim]})
   
-  class(object) <- "reduced"
-  object
+  class(obj) <- "reduced"
+  obj
 }
 
 #' @rdname reduce
 #' @export
 reduce.default <- function(x, method = SYS, targetDim, ..., group){
+  ls <- list(...)
   
-  class(object) <- "reduced"
-  object
+  gr <- substitute(group)
+  if(!(is.character(gr))){
+    gr <- deparse(gr)
+  }else{
+    gr
+  }
+  
+  dat <- dataToListMatrix(x = x, group = gr)
+  
+  tarDim <- check_targetDimType(targetDim = targetDim, x = x)
+  
+  ls$x <- dat
+  
+  obj <- do.call(method, ls)
+  
+  obj$projectionMatrix <- obj$projectionMatrix[1:tarDim,]
+  obj$projectedData <- lapply(obj$projectedData, FUN = function(x){x[,1:tarDim]})
+  
+  class(obj) <- "reduced"
+  obj
 }

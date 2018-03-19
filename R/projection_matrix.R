@@ -18,17 +18,6 @@ projection_matrix <- function(x, ...){
 
 #' @rdname projection_matrix
 #' @export
-projection_matrix.reduced <- function(x, ...){
-  obj <- x
-  
-  object <- obj[-which(names(obj) == "projectedData")]
-  
-  class(object) <- "projection_matrix"
-  object
-}
-
-#' @rdname projection_matrix
-#' @export
 projection_matrix.list <- function(x, method = SYS, ...){
   ls <- list(...)
   ls$x <- x
@@ -44,7 +33,15 @@ projection_matrix.list <- function(x, method = SYS, ...){
 #' @export
 projection_matrix.default <- function(x, method = SYS, ..., group){
   ls <- list(...)
-  dat <- dataToListMatrix(x = dat, group = group)
+  
+  gr <- substitute(group)
+  if(!(is.character(gr))){
+    gr <- deparse(gr)
+  }else{
+    gr
+  }
+  
+  dat <- dataToListMatrix(x = x, group = gr)
   ls$x <- dat
   
   obj <- do.call(method, ls)
