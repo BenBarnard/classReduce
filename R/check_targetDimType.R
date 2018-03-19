@@ -4,7 +4,7 @@
 #' @param x a list of matrices
 #' @param ... other options passsed to targetDim functions
 #'
-#'
+#' @keywords internal
 check_targetDimType <- function(targetDim, x, ...){
   if(is.function(targetDim)){
     tarDim <- do.call(targetDim, list(x = x))

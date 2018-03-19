@@ -2,7 +2,7 @@
 #'
 #' @param x list of matrices for groups
 #'
-#'
+#' @keywords internal
 prior <- function(x){
   n <- lapply(x, nrow)
   total <- Reduce(`+`, n)

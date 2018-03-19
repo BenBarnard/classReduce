@@ -12,3 +12,4 @@ prior(x)
 \description{
 Priors for Groups
 }
+\keyword{internal}

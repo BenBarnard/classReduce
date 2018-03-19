@@ -14,3 +14,4 @@ projection_func(x, proj)
 \description{
 Projection Function
 }
+\keyword{internal}

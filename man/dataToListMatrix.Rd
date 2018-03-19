@@ -2,15 +2,9 @@
 % Please edit documentation in R/dataToListMatrix.R
 \name{dataToListMatrix}
 \alias{dataToListMatrix}
-\alias{dataToListMatrix.data.frame}
-\alias{dataToListMatrix.grouped_df}
 \title{Data Conversion to A List of Matrices}
 \usage{
 dataToListMatrix(x, ...)
-
-\method{dataToListMatrix}{data.frame}(x, group, ...)
-
-\method{dataToListMatrix}{grouped_df}(x, ...)
 }
 \arguments{
 \item{x}{data not in a list of matrices form}
@@ -22,3 +16,4 @@ dataToListMatrix(x, ...)
 \description{
 Data Conversion to A List of Matrices
 }
+\keyword{internal}

@@ -9,3 +9,4 @@ correctedTotal_loss()
 \description{
 Corrected Total Loss
 }
+\keyword{internal}

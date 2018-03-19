@@ -14,3 +14,4 @@ cov(x, ...)
 \description{
 Covariance function Wrappper
 }
+\keyword{internal}

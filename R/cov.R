@@ -2,8 +2,7 @@
 #'
 #' @param x data
 #' @param ... parameters passed to cov
-#'
-#' 
+#' @keywords internal
 #' @importFrom stats cov
 #'
 cov <- function(x, ...){

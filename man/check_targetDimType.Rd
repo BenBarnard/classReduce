@@ -16,3 +16,4 @@ check_targetDimType(targetDim, x, ...)
 \description{
 Check to verify the targetDim Type and Produce a target dimension
 }
+\keyword{internal}
