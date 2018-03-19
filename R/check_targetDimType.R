@@ -4,7 +4,6 @@
 #' @param x a list of matrices
 #' @param ... other options passsed to targetDim functions
 #'
-#' @export
 #'
 check_targetDimType <- function(targetDim, x, ...){
   if(is.function(targetDim)){

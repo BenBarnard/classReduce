@@ -3,7 +3,6 @@
 #' @param x data
 #' @param ... parameters passed to cov
 #'
-#' @export
 #' 
 #' @importFrom stats cov
 #'

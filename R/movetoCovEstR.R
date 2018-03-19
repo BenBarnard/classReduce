@@ -2,7 +2,6 @@
 #'
 #' @param x list of matrices for groups
 #'
-#' @export
 #'
 prior <- function(x){
   n <- lapply(x, nrow)
@@ -19,7 +18,6 @@ prior <- function(x){
 #' @importFrom stats cov
 #'
 #' @keywords internal
-#' @export
 #'
 S_W <- function(prior, matrix_ls){
   Reduce(`+`,
@@ -35,7 +33,6 @@ S_W <- function(prior, matrix_ls){
 #' @param xbar sample means
 #' @param mu overall mean 
 #'
-#' @export
 #' @keywords internal
 #'
 S_B <- function(prior, xbar){

@@ -4,14 +4,12 @@
 #' @param group The grouping variable in a data.frame in quotations
 #' @param ... other options that are not used at the moment
 #'
-#' @export
 dataToListMatrix <- function(x, ...){
   UseMethod("dataToListMatrix")
 }
 
 
 #' @rdname dataToListMatrix
-#' @export
 dataToListMatrix.data.frame <- function(x, group, ...){
   groups <- as.character(unique(x[[group]]))
   mats <- lapply(groups, function(gr){
@@ -23,7 +21,6 @@ dataToListMatrix.data.frame <- function(x, group, ...){
 }
 
 #' @rdname dataToListMatrix
-#' @export
 dataToListMatrix.grouped_df <- function(x, ...){
   group <- attributes(x)$vars
   groups <- as.character(unique(x[[group]]))

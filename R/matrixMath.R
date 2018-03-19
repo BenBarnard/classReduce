@@ -3,7 +3,6 @@
 #' @param matrix matrix
 #'
 #' @keywords internal
-#' @export
 #'
 matInvSqrt <- function (matrix) {
   svdMat <- svd(matrix)
