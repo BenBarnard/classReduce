@@ -15,6 +15,7 @@ discrimFunc.data.frame <- function(dat, discrim, group, ...){
 }
 
 #' @keywords internal
+#' @importFrom dplyr ungroup
 discrimFunc.grouped_df <- function(dat, discrim, ...){
   group <- attributes(dat)$vars
   dataUn <- ungroup(dat)
