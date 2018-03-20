@@ -12,7 +12,8 @@ cer_func <- function(ind, predictObject, newdatagroup){
     }else{
       as.numeric(gsub("[A-z]+", "", check)) / length(newdatagroup)
     }
-    pred <- c(predictObject, cer = cer)
+    predictObject$cer <- cer
+    pred <- predictObject
   }else{
     pred <- predictObject
   }

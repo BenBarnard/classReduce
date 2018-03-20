@@ -12,13 +12,13 @@ object2 <- predict(classify(reduce(dataMat,
                                   targetDim = 2, 
                                   group = "Group",
                                   output = "matrix")), 
-                  listMatToDataframe(dataMat, group = "Group")[-5])
+                   listMatToDataframe(dataMat, group = "Group"))
 
 
 test_that("cer_func produces predict object when ind = FALSE", {
   expect_equal(cer_func(ind = FALSE, object, newdataGr), object)
 })
 
-test_that("cer_func produces predict object when ind = FALSE", {
+test_that("cer_func produces predict object when ind = TRUE", {
   expect_equal(cer_func(ind = TRUE, object2, listMatToDataframe(dataMat, group = "Group")[[5]]), object2)
 })
