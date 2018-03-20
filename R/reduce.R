@@ -33,6 +33,8 @@ reduce.list <- function(x, method = SYS, targetDim, ..., group = "Group", output
                                         output = output, 
                                         group = group)
   
+  obj$group <- group
+  
   class(obj) <- "reduced"
   obj
 }
@@ -64,6 +66,7 @@ reduce.default <- function(x, method = SYS, targetDim, ..., group, output = "dat
   obj$projectedData <- check_reduceOutput(dat = projData, 
                                         output = output, 
                                         group = gr)
+  obj$group <- gr
   
   class(obj) <- "reduced"
   obj

@@ -20,19 +20,14 @@ classify <- function(x, ...){
 #' @keywords internal
 #'
 #' @importFrom MASS qda
-#' @importFrom dplyr select
-#' @importFrom dplyr select_
 #'
 classify.reduced <- function(x, ...){
-
-  discrimFunc <- qda
-
-  if(any(class(x) %in% paste(discrimFunc))){stop(cat("Object already Classified"))}
+  
+  discrim <- qda
 
   group <- x$group
-
-  classification <- do.call(paste(discrimFunc), list(select(ungroup(x$reducedData), -eval(group)),
-                                                     select_(x$reducedData, group)[[1]]))
+  
+  classification <- discrimFunc(x$projectedData, discrim, group)
 
   object <- c(classification, list(projectionMatrix = x$projectionMatrix, group = group, method = x$method))
 
