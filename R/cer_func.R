@@ -6,7 +6,6 @@
 #' @keywords internal
 cer_func <- function(ind, predictObject, newdatagroup){
   if(ind){
-    browser()
     check <- all.equal(as.factor(newdatagroup), predictObject$class)
     cer <- if(is.logical(check)){
       as.numeric(check)

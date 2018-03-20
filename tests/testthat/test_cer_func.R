@@ -20,5 +20,5 @@ test_that("cer_func produces predict object when ind = FALSE", {
 })
 
 test_that("cer_func produces predict object when ind = FALSE", {
-  expect_equal(cer_func(ind = FALSE, object2, listMatToDataframe(dataMat, group = "Group")[-5]), object2)
+  expect_equal(cer_func(ind = TRUE, object2, listMatToDataframe(dataMat, group = "Group")[[5]]), object2)
 })
