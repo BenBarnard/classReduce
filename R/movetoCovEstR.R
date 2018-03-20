@@ -63,12 +63,11 @@ S_B <- function(prior, xbar){
 #'
 #' @export
 #'
-#' @importFrom lazyeval lazy_dots
 #' @importFrom stats cov
 #'
 #' @examples Haff_shrinkage(as.matrix(iris[-5]))
 Haff_shrinkage <- function(x, ...){
-  dots <- lazy_dots(...)
+  dots <- list(...)
   cov <- stats::cov(x)
   invCov <- solve(cov)
   n <- nrow(x)

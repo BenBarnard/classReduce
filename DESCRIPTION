@@ -15,14 +15,8 @@ Suggests:
     knitr,
     rmarkdown
 Imports:
-    plyr,
-    dplyr,
-    stringr,
-    lazyeval,
     MASS,
-    covEstR,
-    reshape2
-Remotes: benbarnard/covEstR
+    dplyr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
