@@ -12,7 +12,7 @@ check_targetDimType <- function(targetDim, x, ...){
     if(is.numeric(targetDim)){
       tarDim <- targetDim
     }else{
-      warning("targetDim is neither a function for how to calculate the target 
+      stop("targetDim is neither a function for how to calculate the target 
               dimension or a numeric for the target dimension")
     }
   }

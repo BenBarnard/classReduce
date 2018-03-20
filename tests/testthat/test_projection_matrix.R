@@ -1,9 +1,5 @@
 context("projection_matrix")
 
-dataMat <- list(a = matrix(rnorm(10), nrow = 5), 
-                b = matrix(rnorm(10), nrow = 5), 
-                c = matrix(rnorm(10), nrow = 5))
-
 test_that("projection_matrix supplies a projection matrix", {
   expect_equal(is.matrix(projection_matrix(dataMat)$projectionMatrix), TRUE)
 })

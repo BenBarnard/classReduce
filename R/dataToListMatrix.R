@@ -23,6 +23,7 @@ dataToListMatrix.data.frame <- function(x, group, ...){
 }
 
 #' @keywords internal
+#' @importFrom dplyr grouped_df
 dataToListMatrix.grouped_df <- function(x, ...){
   group <- attributes(x)$vars
   groups <- as.character(unique(x[[group]]))

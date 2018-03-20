@@ -1,9 +1,5 @@
 context("SAVE")
 
-dataMat <- list(a = matrix(rnorm(10), nrow = 5), 
-                b = matrix(rnorm(10), nrow = 5), 
-                c = matrix(rnorm(10), nrow = 5))
-
 test_that("SAVE supplies a list of projected data", {
   expect_equal(is.matrix(SAVE(dataMat)$projectedData[[1]]), TRUE)
 })

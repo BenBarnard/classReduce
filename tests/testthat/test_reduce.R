@@ -1,9 +1,5 @@
 context("reduce")
 
-dataMat <- list(a = matrix(rnorm(20), nrow = 5), 
-                b = matrix(rnorm(20), nrow = 5), 
-                c = matrix(rnorm(20), nrow = 5))
-
 test_that("reduce supplies a projection matrix", {
   expect_equal(is.matrix(reduce(dataMat, targetDim = 2)$projectionMatrix), TRUE)
 })

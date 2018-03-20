@@ -6,11 +6,13 @@
 \alias{reduce.default}
 \title{Reduction}
 \usage{
-reduce(x, method, targetDim, ...)
+reduce(x, method, targetDim, ..., group, output = "data.frame")
 
-\method{reduce}{list}(x, method = SYS, targetDim, ...)
+\method{reduce}{list}(x, method = SYS, targetDim, ..., group = "Group",
+  output = "data.frame")
 
-\method{reduce}{default}(x, method = SYS, targetDim, ..., group)
+\method{reduce}{default}(x, method = SYS, targetDim, ..., group,
+  output = "data.frame")
 }
 \arguments{
 \item{x}{a list of matrices or a projection_matrix class object}
@@ -22,6 +24,8 @@ reduce(x, method, targetDim, ...)
 \item{...}{options past to linear dimension reduction and target dimension methods}
 
 \item{group}{variable in the data the specifies the groupings of the data}
+
+\item{output}{output form either matrix, data.frame, or grouped_df}
 }
 \description{
 Given a linear reduction method reduction will produce a data reduction
